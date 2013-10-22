@@ -13,9 +13,7 @@
             "email": "mathieu@wisembly.com"
         }
     ],
-    "config": {
-        "bin-dir": "bin"
-    },
+    "bin": ["bin/jsgettext"],
     "require": {
         "php": ">=5.3.0"
     },
