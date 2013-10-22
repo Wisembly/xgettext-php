@@ -10,7 +10,7 @@ class JsgettextTest extends TestCase
 {
     public function testJsgettext()
     {
-        $output = __DIR__.'/Resources/dump/dump.po';
+        $output = __DIR__.'/Resources/dump/' . $this->generateRandomFileName();
         $files = array(__DIR__.'/Resources/test.html', __DIR__.'/Resources/test.js');
 
         new Jsgettext($files, $output, array('__'));

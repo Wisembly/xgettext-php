@@ -12,15 +12,18 @@ class PoeditDumperTest extends TestCase
 {
     public function setUp()
     {
-        $this->seed = mt_rand(1, 1000);
         $this->file = new PoeditFile();
-        $this->file->addString(new PoeditString('foo', 'bar', true, array('baz:' . $this->seed)));
+        $this->file->addString(new PoeditString('foo', 'bar', true, array('baz')));
         $this->file->addString(new PoeditString('qux', 'bux'));
     }
 
     public function testDump()
     {
-        $output = __DIR__ . '/../Resources/dump/dump.po';
+        $filename = $this->generateRandomFileName();
+        $basePath = __DIR__ . '/../Resources/dump';
+        $dir1 = $this->generateRandomFileName(null);
+        $dir2 = $this->generateRandomFileName(null);
+        $output = $basePath . '/' . $dir1 . '/' . $dir2 . '/' . $filename;
 
         $dumper = new PoeditDumper($output);
         $dumper->dump($this->file);
@@ -30,8 +33,10 @@ class PoeditDumperTest extends TestCase
 
         $this->assertCount(2, $file->getStrings());
         $this->assertTrue($file->getString('foo')->isFuzzy());
-        $this->assertEquals($file->getString('foo')->getComments(), array('baz:' . $this->seed));
+        $this->assertEquals($file->getString('foo')->getComments(), array('baz'));
 
         unlink($output);
+        rmdir($basePath . '/' . $dir1 . '/' . $dir2);
+        rmdir($basePath . '/' . $dir1);
     }
 }
