@@ -1,0 +1,11 @@
+msgid ""
+msgstr ""
+
+#: baz:150
+#, fuzzy
+msgid "foo"
+msgstr "bar"
+
+msgid "qux"
+msgstr "bux"
+

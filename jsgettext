@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+require_once __DIR__.'/vendor/autoload.php';
+
+use \Exception;
+
+use Jsgettext\Jsgettext;
+
+$options = array(
+    'files' => array(),
+    '-o'    => null,
+    '-k'    => '_'
+);
+$i = 1;
+
+while ($i < count($argv)) {
+    if (preg_match('#^-[a-z]$#i', $argv[$i])) {
+        $options[$argv[$i]] = isset($argv[$i+1]) ? trim($argv[$i+1]) : true;
+        $i += 2;
+    } else {
+        $options['files'][] = $argv[$i];
+        $i++;
+    }
+}
+
+try {
+    new Jsgettext($options['files'], $options['-o'], explode(' ', $options['-k']), true);
+} catch (Exception $e) {
+    fwrite(STDOUT, $e->getMessage() . "\n");
+}
