@@ -1,0 +1,8 @@
+msgid "Preview"
+msgstr "Prévisualiser"
+
+msgid "Edit"
+msgstr "Editer"
+
+msgid "Download"
+msgstr "Télécharger"

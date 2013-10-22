@@ -1,2 +1,2 @@
 .DS_Store
-/tests/Jsgettext/Resources/dump.po
+/tests/Jsgettext/Tests/Resources/dump/*

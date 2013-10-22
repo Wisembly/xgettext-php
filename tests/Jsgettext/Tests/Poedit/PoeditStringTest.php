@@ -7,6 +7,20 @@ use Jsgettext\Tests\TestCase,
 
 class PoeditStringTest extends TestCase
 {
+
+    public function testString()
+    {
+        $string = new String('foo', 'bar');
+        $this->assertEquals('bar', $string->getValue());
+        $string->setValue('baz');
+        $this->assertEquals('baz', $string->getValue());
+        $string->setValue('');
+        $this->assertTrue($string->isEmpty());
+        $this->assertFalse($string->isFuzzy());
+        $string->setFuzzy(true);
+        $this->assertTrue($string->isFuzzy());
+    }
+
     public function testSimpleString()
     {
         $string = new String('Reference text', 'Translated value in whatever languague you want');
@@ -22,6 +36,7 @@ EOT
     public function testStringWithFuzzy()
     {
         $string = new String('Reference text', 'Translated value in whatever languague you want', true);
+        $this->assertTrue($string->isFuzzy());
         $this->assertEquals($string->__toString(),<<<EOT
 #, fuzzy
 msgid "Reference text"

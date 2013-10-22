@@ -40,28 +40,21 @@ class PoeditString
         return $this->key;
     }
 
-    public function setKey($key)
-    {
-        $this->key = $key;
-
-        return $this;
-    }
-
     public function getValue()
     {
         return $this->value;
     }
 
-    public function isEmpty()
-    {
-        return empty($this->value);
-    }
-
-    public function setValue()
+    public function setValue($value)
     {
         $this->value = $value;
 
         return $this;
+    }
+
+    public function isEmpty()
+    {
+        return empty($this->value);
     }
 
     public function isFuzzy()
@@ -79,11 +72,6 @@ class PoeditString
     public function getComments()
     {
         return $this->comments;
-    }
-
-    public function setComments(array $comments)
-    {
-        $this->comments = (array) $comments;
     }
 
     public function addComment($comment)

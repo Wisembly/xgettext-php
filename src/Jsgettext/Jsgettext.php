@@ -42,7 +42,7 @@ class Jsgettext
             return;
         }
 
-        echo <<<EOT
+        echo "<<<EOT
 
 Usage php jsgettext -o [OUTPUT] -k [KEYWORDS] [FILES]   
     -o [OUTPUT]
@@ -57,7 +57,7 @@ Usage php jsgettext -o [OUTPUT] -k [KEYWORDS] [FILES]
 
 
 EOT
-        ;
+        ";
     }
 
     private function createOutputFile($output)

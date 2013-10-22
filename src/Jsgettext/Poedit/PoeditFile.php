@@ -14,7 +14,7 @@ class PoeditFile
         $this->strings = array();
         $this->headers = null === $headers ? 'msgid ""' . "\n" . 'msgstr ""' : $headers;
 
-        foreach ($strings as $key => $string) {
+        foreach ($strings as $string) {
             if (!($string instanceof PoeditString)) {
                 throw new InvalidArgumentException('You must give a PoeditStrings array');
             }
@@ -23,7 +23,7 @@ class PoeditFile
         }
     }
 
-    public function setHeaders()
+    public function setHeaders($headers)
     {
         $this->headers = $headers;
 
@@ -61,7 +61,7 @@ class PoeditFile
         if (!$this->hasString($key)) {
             $this->strings[$key] = $string;
         } else {
-            $this->strings[$key]->addComments($string->comments);
+            $this->strings[$key]->addComments($string->getComments());
         }
 
         return $this;
@@ -76,13 +76,13 @@ class PoeditFile
         return $this;
     }
 
-    public function removeString(PoeditString $string)
+    public function removeString($key)
     {
-        if (!$this->hasString($string->getKey())) {
+        if (!$this->hasString($key)) {
             return $this;
         }
 
-        unset($this->strings[$string->getKey()]);
+        unset($this->strings[$key]);
 
         return $this;
     }

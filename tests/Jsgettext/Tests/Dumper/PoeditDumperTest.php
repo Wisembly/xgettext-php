@@ -20,7 +20,7 @@ class PoeditDumperTest extends TestCase
 
     public function testDump()
     {
-        $dumpFile = __DIR__ . '/../Resources/dump.po';
+        $dumpFile = __DIR__ . '/../Resources/dump/dump.po';
 
         $dumper = new PoeditDumper($dumpFile);
         $dumper->dump($this->file);
