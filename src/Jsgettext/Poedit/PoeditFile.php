@@ -12,7 +12,7 @@ class PoeditFile
     public function __construct($headers = null, array $strings = array())
     {
         $this->strings = array();
-        $this->headers = null === $headers ? 'msgid ""' . "\n" . 'msgstr ""' : $headers;
+        $this->headers = null === $headers ? 'msgid ""' . PHP_EOL . 'msgstr ""' : $headers;
 
         foreach ($strings as $string) {
             if (!($string instanceof PoeditString)) {

@@ -23,7 +23,7 @@ class PoeditDumper implements DumperInterface
     */
     public function dump(PoeditFile $file, $filename = null)
     {
-        $content = $file->getHeaders() . "\n\n";
+        $content = $file->getHeaders() . PHP_EOL . PHP_EOL;
         foreach ($file->getStrings() as $string) {
             $content .= $string;
         }

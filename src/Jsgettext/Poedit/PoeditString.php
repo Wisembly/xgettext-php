@@ -21,16 +21,16 @@ class PoeditString
     {
         $string = '';
         foreach ($this->comments as $comment) {
-            $string .= "#: $comment\n";
+            $string .= "#: $comment" . PHP_EOL;
         }
 
         if (true === $this->fuzzy) {
             $string .= "#, fuzzy\n";
         }
 
-        $string .= 'msgid "'.str_replace('"', '\\"', $this->key).'"' . "\n";
-        $string .= 'msgstr "'.str_replace('"', '\\"', $this->value).'"' . "\n";
-        $string .= "\n";
+        $string .= 'msgid "'.str_replace('"', '\\"', $this->key).'"' . PHP_EOL;
+        $string .= 'msgstr "'.str_replace('"', '\\"', $this->value).'"' . PHP_EOL;
+        $string .= PHP_EOL;
 
         return $string;
     }

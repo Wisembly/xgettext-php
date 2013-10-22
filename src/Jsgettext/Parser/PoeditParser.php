@@ -27,7 +27,7 @@ class PoeditParser implements ParserInterface
         if (count($parts) && false !== strpos($parts[0], 'msgid ""')) {
             $headers = array_shift($parts);
         } else {
-            $headers = 'msgid ""' . "\n" . 'msgstr ""';
+            $headers = 'msgid ""' . PHP_EOL . 'msgstr ""';
         }
 
         foreach ($parts as $part) {
