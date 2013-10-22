@@ -23,8 +23,6 @@ class Jsgettext
             throw new InvalidArgumentException('You did not provide any output file.');
         }
 
-        $this->createOutputFile($output);
-
         $poeditFile = new PoeditFile();
 
         foreach ($files as $file) {
@@ -34,11 +32,5 @@ class Jsgettext
 
         $poeditDumper = new PoeditDumper($output);
         $poeditDumper->dump($poeditFile);
-    }
-
-    private function createOutputFile($output)
-    {
-        @exec("mkdir -p `dirname {$output}`");
-        @exec("touch {$output}");
     }
 }

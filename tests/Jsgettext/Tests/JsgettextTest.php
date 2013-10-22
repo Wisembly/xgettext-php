@@ -19,6 +19,7 @@ class JsgettextTest extends TestCase
         $file = $parser->parse();
 
         $this->assertCount(14, $file->getStrings());
+        unlink($output);
     }
 
     /**

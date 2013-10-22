@@ -20,16 +20,18 @@ class PoeditDumperTest extends TestCase
 
     public function testDump()
     {
-        $dumpFile = __DIR__ . '/../Resources/dump/dump.po';
+        $output = __DIR__ . '/../Resources/dump/dump.po';
 
-        $dumper = new PoeditDumper($dumpFile);
+        $dumper = new PoeditDumper($output);
         $dumper->dump($this->file);
 
-        $parser = new PoeditParser($dumpFile);
+        $parser = new PoeditParser($output);
         $file = $parser->parse();
 
         $this->assertCount(2, $file->getStrings());
         $this->assertTrue($file->getString('foo')->isFuzzy());
         $this->assertEquals($file->getString('foo')->getComments(), array('baz:' . $this->seed));
+
+        unlink($output);
     }
 }

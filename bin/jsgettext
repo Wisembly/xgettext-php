@@ -3,7 +3,7 @@
 
 set_time_limit(0);
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use \Exception;
 
@@ -26,6 +26,10 @@ while ($i < count($argv)) {
     }
 }
 
+// create output file if do not exist
+mkdirr(substr($output, 0, strrpos($output, '/')));
+touch($output);
+
 try {
     new Jsgettext($options['files'], $options['-o'], explode(' ', $options['-k']), true);
 } catch (Exception $e) {
@@ -47,4 +51,28 @@ Usage php jsgettext -o [OUTPUT] -k [KEYWORDS] [FILES]
 
 EOT
         );
+}
+
+function mkdirr($pathname, $mode = 0777)
+{
+    // Check if file already exists
+    if (is_dir($pathname) || empty($pathname)) {
+        return true;
+    }
+
+    // Ensure a file does not already exist with the same name
+    $pathname = str_replace(array('/', ''), DIRECTORY_SEPARATOR, $pathname);
+    if (is_file($pathname)) {
+        return false;
+    }
+
+    // Crawl up the directory tree
+    $next_pathname = substr($pathname, 0, strrpos($pathname, DIRECTORY_SEPARATOR));
+    if (mkdirr($next_pathname, $mode)) {
+        if (!file_exists($pathname)) {
+            return mkdir($pathname, $mode);
+        }
+    }
+
+    return false;
 }
