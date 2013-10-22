@@ -13,6 +13,9 @@
             "email": "mathieu@wisembly.com"
         }
     ],
+    "config": {
+        "bin-dir": "bin"
+    },
     "require": {
         "php": ">=5.3.0"
     },
