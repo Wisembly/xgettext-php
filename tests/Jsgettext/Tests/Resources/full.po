@@ -13,7 +13,7 @@ msgstr ""
 
 #: ../../../../../web/frontend/apps/desktop/js/views/view_page_documents.js:186
 #: ../../../../../web/frontend/core/templates/document.html:111
-msgid "Preview"
+msgid "Preview \"with double quotes\""
 msgstr "Prévisualiser"
 
 #: ../../../../../web/frontend/apps/desktop/js/views/view_page_documents.js:188
@@ -29,5 +29,5 @@ msgid "Edit"
 msgstr "Editer"
 
 #: ../../../../../web/frontend/apps/desktop/js/views/view_page_documents.js:190
-msgid "Download"
+msgid "Download \'escaped simple quotes\'"
 msgstr "Télécharger"

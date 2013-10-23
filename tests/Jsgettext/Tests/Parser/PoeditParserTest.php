@@ -21,11 +21,14 @@ class PoeditParserTest extends TestCase
     public function testParsePoeditFile()
     {
         $parser = new PoeditParser(__DIR__ . '/../Resources/full.po');
-        $content = $parser->parse();
+        $file = $parser->parse();
 
-        $strings = $content->getStrings();
-        $this->assertInstanceOf('\Jsgettext\Poedit\PoeditFile', $content);
+        $strings = $file->getStrings();
+        $this->assertInstanceOf('\Jsgettext\Poedit\PoeditFile', $file);
         $this->assertCount(3, $strings);
-        $this->assertCount(9, $content->getString('Edit')->getComments());
+        $this->assertCount(9, $file->getString('Edit')->getComments());
+
+        $this->assertTrue($file->hasString('Download \\\'escaped simple quotes\\\''));
+        $this->assertTrue($file->hasString('Preview "with double quotes"'));
     }
 }

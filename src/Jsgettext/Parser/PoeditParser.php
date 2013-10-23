@@ -44,7 +44,7 @@ class PoeditParser implements ParserInterface
                 continue;
             }
 
-            $key = stripslashes($matches[0][2]);
+            $key = str_replace('\\"', '"', $matches[0][2]);
 
             if (empty($key)) {
                 continue;
