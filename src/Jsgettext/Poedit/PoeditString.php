@@ -100,4 +100,11 @@ class PoeditString
 
         return $this;
     }
+
+    public function sortComments()
+    {
+        sort($this->comments);
+
+        return $this;
+    }
 }

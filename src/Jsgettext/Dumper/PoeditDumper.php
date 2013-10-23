@@ -19,15 +19,19 @@ class PoeditDumper implements DumperInterface
     *
     *   @param PoeditFile   $file
     *   @param string       $filename
+    *   @param boolean      $sort       if enabled, sort strings and their comments. implemented to avoid too many git conflicts
+    *
     *   @return boolean
     */
-    public function dump(PoeditFile $file, $filename = null)
+    public function dump(PoeditFile $file, $filename = null, $sort = false)
     {
         $filename = null !== $filename ? $filename : $this->file;
         $content = $file->getHeaders() . PHP_EOL . PHP_EOL;
 
-        foreach ($file->getStrings() as $string) {
-            $content .= $string;
+        $strings = true === $sort ? $file->sortStrings()->getStrings() : $file->getStrings();
+
+        foreach ($strings as $string) {
+            $content .= true === $sort ? $string->sortComments() : $string;
         }
 
         // ensure that path exists

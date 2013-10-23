@@ -86,4 +86,11 @@ class PoeditFile
 
         return $this;
     }
+
+    public function sortStrings()
+    {
+        asort($this->strings);
+
+        return $this;
+    }
 }
