@@ -21,6 +21,14 @@ class PoeditStringTest extends TestCase
         $this->assertTrue($string->isFuzzy());
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testInvalidString()
+    {
+        new String('', 'value');
+    }
+
     public function testSimpleString()
     {
         $string = new String('Reference text', 'Translated value in whatever languague you want');

@@ -2,6 +2,8 @@
 
 namespace Jsgettext\PoEdit;
 
+use \InvalidArgumentException;
+
 class PoeditString
 {
     private $key;
@@ -11,6 +13,10 @@ class PoeditString
 
     function __construct($key, $value = '', $fuzzy = false, array $comments = array())
     {
+        if (empty($key)) {
+            throw new InvalidArgumentException('PoeditString key could not be empty');
+        }
+
         $this->key = $key;
         $this->value = $value;
         $this->fuzzy = $fuzzy;

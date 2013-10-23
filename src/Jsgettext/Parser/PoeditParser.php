@@ -38,13 +38,19 @@ class PoeditParser implements ParserInterface
                 $comments[] = $m[1];
             }
 
-            $isFuzzy = preg_match('#^\\#, fuzzy$#im', $part) ? true : false;
-            preg_match_all('# ^ (msgid|msgstr)\ " ( (?: (?>[^"\\\\]++) | \\\\\\\\ | (?<!\\\\)\\\\(?!\\\\) | \\\\" )* ) (?<!\\\\)" $ #ixm', $part, $matches2, PREG_SET_ORDER);
+            preg_match_all('# ^ (msgid|msgstr)\ " ( (?: (?>[^"\\\\]++) | \\\\\\\\ | (?<!\\\\)\\\\(?!\\\\) | \\\\" )* ) (?<!\\\\)" $ #ixm', $part, $matches, PREG_SET_ORDER);
 
-            $k = stripslashes($matches2[0][2]);
-            $v = !empty($matches2[1][2]) ? stripslashes($matches2[1][2]) : '';
+            if (empty($matches)) {
+                continue;
+            }
 
-            $strings[$k] = new PoeditString($k, $v, $isFuzzy, $comments);
+            $key = stripslashes($matches[0][2]);
+
+            if (empty($key)) {
+                continue;
+            }
+
+            $strings[$key] = new PoeditString($key, !empty($matches[1][2]) ? stripslashes($matches[1][2]) : '', !!preg_match('#^\\#, fuzzy$#im', $part), $comments);
         }
 
         return new PoeditFile($headers, $strings);
