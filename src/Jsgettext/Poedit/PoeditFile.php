@@ -23,6 +23,45 @@ class PoeditFile
         }
     }
 
+    public function getUntranslated()
+    {
+        $untranslated = array();
+
+        foreach ($this->strings as $string) {
+            if ($string->isEmpty()) {
+                $untranslated[] = $string;
+            }
+        }
+
+        return $untranslated;
+    }
+
+    public function getFuzzy()
+    {
+        $fuzzy = array();
+
+        foreach ($this->strings as $string) {
+            if ($string->isFuzzy()) {
+                $fuzzy[] = $string;
+            }
+        }
+
+        return $fuzzy;
+    }
+
+    public function getTranslated()
+    {
+        $translated = array();
+
+        foreach ($this->strings as $string) {
+            if (!$string->isEmpty()) {
+                $translated[] = $string;
+            }
+        }
+
+        return $translated;
+    }
+
     public function setHeaders($headers)
     {
         $this->headers = $headers;

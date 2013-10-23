@@ -44,4 +44,20 @@ class PoeditFileTest extends TestCase
     {
         $file = new PoeditFile(null, array('foo', 'bar'));
     }
+
+    public function testGetters()
+    {
+        $file = new PoeditFile();
+        $file->addString(new String('foo', 'bar', false, array('comment1')));
+        $file->addString(new String('bar', 'baz', true, array('comment1')));
+        $file->addString(new String('qux'));
+
+        $untranslated = $file->getUntranslated();
+        $fuzzy = $file->getFuzzy();
+        $translated = $file->getTranslated();
+
+        $this->assertCount(2, $translated);
+        $this->assertCount(1, $fuzzy);
+        $this->assertCount(1, $untranslated);
+    }
 }
