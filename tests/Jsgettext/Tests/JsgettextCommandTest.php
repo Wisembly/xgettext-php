@@ -17,7 +17,7 @@ class JsgettextCommandTest extends TestCase
         $file = $parser->parse();
 
         $this->assertInstanceOf('\Jsgettext\Poedit\PoeditFile', $file);
-        $this->assertCount(14, $file->getStrings());
+        $this->assertCount(15, $file->getStrings());
 
         unlink($output);
     }

@@ -18,7 +18,7 @@ class JsgettextTest extends TestCase
         $parser = new PoeditParser($output);
         $file = $parser->parse();
 
-        $this->assertCount(14, $file->getStrings());
+        $this->assertCount(15, $file->getStrings());
         unlink($output);
     }
 

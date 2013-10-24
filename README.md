@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/Wisembly/jsgettext.png?branch=master)](https://travis-ci.org/Wisembly/jsgettext)
 
-Javascript (js and html template files) parser for poEdit implemented in PHP.
+Parser for poEdit implemented in PHP. use same API as xgettext. We use it for parsing our
+javascript and html templates files in our Backbone apps.
 Caution: this is **NOT** an xgettext javascript language implementation, this is **JUST**
 a parser for many files (that we use for our *.js and *.html files) and have no language
 syntax check implementation.

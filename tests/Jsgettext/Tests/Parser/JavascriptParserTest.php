@@ -21,7 +21,7 @@ class JavascriptParserTest extends TestCase
         $parser = new JavascriptParser(__DIR__ . '/../Resources/test.html', array('__'));
         $content = $parser->parse();
 
-        $this->assertCount(5, $content);
+        $this->assertCount(6, $content);
         $this->assertInstanceOf('\Jsgettext\Poedit\PoeditString', $content['hello %placeholder%']);
     }
 }

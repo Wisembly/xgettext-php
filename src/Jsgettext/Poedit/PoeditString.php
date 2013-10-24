@@ -48,11 +48,24 @@ class PoeditString
             $string .= "#, {$flag}" . PHP_EOL;
         }
 
-        $string .= ($this->isDeprecated() ? '#~ ' : '') . 'msgid "' . str_replace('"', '\\"', $this->key) . '"' . PHP_EOL;
-        $string .= ($this->isDeprecated() ? '#~ ' : '') . 'msgstr "' . str_replace('"', '\\"', $this->value) . '"' . PHP_EOL;
+        $string .= ($this->isDeprecated() ? '#~ ' : '') . 'msgid ' . $this->dumpString($this->key);
+        $string .= ($this->isDeprecated() ? '#~ ' : '') . 'msgstr ' . $this->dumpString($this->value);
         $string .= PHP_EOL;
 
         return $string;
+    }
+
+    private function dumpString($string)
+    {
+        $len = strlen($string);
+
+        if ($len <= 71) {
+            return '"' . str_replace('"', '\\"', $string) . '"' . PHP_EOL;
+        } elseif ($len <= 78) {
+            return '""' . PHP_EOL . '"' . str_replace('"', '\\"', $string) . '"' . PHP_EOL;
+        } else {
+            return '""' . PHP_EOL . '"' . wordwrap(str_replace('"', '\\"', $string), 78, ' "' . PHP_EOL . '"', true) . '"' . PHP_EOL;
+        }
     }
 
     public function getKey()
