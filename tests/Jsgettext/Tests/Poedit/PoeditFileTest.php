@@ -21,12 +21,12 @@ class PoeditFileTest extends TestCase
     public function testStrings()
     {
         $file = new PoeditFile();
-        $file->addString(new String('foo', 'bar', false, array('comment1')));
-        $file->addString(new String('bar', 'baz', false, array('comment1')));
+        $file->addString(new String('foo', 'bar', array('comment1')));
+        $file->addString(new String('bar', 'baz', array('comment1')));
         $this->assertCount(2, $file->getStrings());
         $this->assertCount(1, $file->getString('foo')->getComments());
 
-        $file->addString(new String('foo', 'bar', false, array('comment2')));
+        $file->addString(new String('foo', 'bar', array('comment2')));
         $this->assertCount(2, $file->getStrings());
         $this->assertCount(2, $file->getString('foo')->getComments());
 
@@ -48,8 +48,9 @@ class PoeditFileTest extends TestCase
     public function testGetters()
     {
         $file = new PoeditFile();
-        $file->addString(new String('foo', 'bar', false, array('comment1')));
-        $file->addString(new String('bar', 'baz', true, array('comment1')));
+        $file->addString(new String('foo', 'bar', array('comment1')));
+        $file->addString(new String('bar', 'baz', array('comment1')));
+        $file->getString('bar')->setFuzzy(true);
         $file->addString(new String('qux'));
 
         $untranslated = $file->getUntranslated();
@@ -59,5 +60,20 @@ class PoeditFileTest extends TestCase
         $this->assertCount(2, $translated);
         $this->assertCount(1, $fuzzy);
         $this->assertCount(1, $untranslated);
+    }
+
+    public function testComments()
+    {
+        $string = new String('foo', 'bar', array('foo'), array('bar'), array('baz'), array('qux'));
+        $string->addComment('bar');
+        $string->addExtracted('baz');
+        $string->addReference('qux');
+        $string->addFlag('fuzzy');
+
+        $this->assertTrue($string->isFuzzy());
+        $this->assertTrue($string->hasComment('foo'));
+        $this->assertTrue($string->hasExtracted('bar'));
+        $this->assertTrue($string->hasReference('baz'));
+        $this->assertTrue($string->hasFlag('qux'));
     }
 }

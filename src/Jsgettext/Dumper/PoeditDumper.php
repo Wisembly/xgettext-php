@@ -31,7 +31,7 @@ class PoeditDumper implements DumperInterface
         $strings = true === $sort ? $file->sortStrings()->getStrings() : $file->getStrings();
 
         foreach ($strings as $string) {
-            $content .= true === $sort ? $string->sortComments() : $string;
+            $content .= true === $sort ? $string->sortReferences()->sortComments()->sortExtracteds()->sortFlags() : $string;
         }
 
         // ensure that path exists

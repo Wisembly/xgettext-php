@@ -128,7 +128,13 @@ class PoeditFile
 
     public function sortStrings()
     {
-        asort($this->strings);
+        uasort($this->strings, function ($a, $b) {
+           if ($a->getKey() === $b->getKey()) {
+               return 0;
+           }
+
+           return $a->getKey() < $b->getKey() ? -1 : 1;
+        });
 
         return $this;
     }

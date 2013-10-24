@@ -43,7 +43,8 @@ EOT
 
     public function testStringWithFuzzy()
     {
-        $string = new String('Reference text', 'Translated value in whatever languague you want', true);
+        $string = new String('Reference text', 'Translated value in whatever languague you want');
+        $string->setFuzzy(true);
         $this->assertTrue($string->isFuzzy());
         $this->assertEquals($string->__toString(),<<<EOT
 #, fuzzy
@@ -57,7 +58,7 @@ EOT
 
     public function testStringWithComments()
     {
-        $string = new String('Reference text', 'Translated value in whatever languague you want', false, array('../../first/file.js:85', '../../second/file.html:42'));
+        $string = new String('Reference text', 'Translated value in whatever languague you want', array(), array(), array('../../first/file.js:85', '../../second/file.html:42'));
         $this->assertEquals($string->__toString(),<<<EOT
 #: ../../first/file.js:85
 #: ../../second/file.html:42
@@ -71,7 +72,7 @@ EOT
 
     public function testStringWithCommentsAndFuzzy()
     {
-        $string = new String('Reference text', 'Translated value in whatever languague you want', true, array('../../first/file.js:85', '../../second/file.html:42'));
+        $string = new String('Reference text', 'Translated value in whatever languague you want', array(), array(), array('../../first/file.js:85', '../../second/file.html:42'), array('fuzzy'));
         $this->assertEquals($string->__toString(),<<<EOT
 #: ../../first/file.js:85
 #: ../../second/file.html:42
@@ -84,9 +85,28 @@ EOT
         );
     }
 
+    public function testStringWFull()
+    {
+        $string = new String('Reference text', 'Translated value in whatever languague you want', array('translator comment', 'another one'), array('extracted comment'), array('../../first/file.js:85', '../../second/file.html:42'), array('fuzzy', 'foo'));
+        $this->assertEquals($string->__toString(),<<<EOT
+# translator comment
+# another one
+#. extracted comment
+#: ../../first/file.js:85
+#: ../../second/file.html:42
+#, fuzzy
+#, foo
+msgid "Reference text"
+msgstr "Translated value in whatever languague you want"
+
+
+EOT
+        );
+    }
+
     public function testComments()
     {
-        $string = new String('Reference text', 'Translated value in whatever languague you want', false, array('foo'));
+        $string = new String('Reference text', 'Translated value in whatever languague you want', array('foo'));
         $this->assertEquals($string->getComments(), array('foo'));
 
         $string->addComment('bar');
@@ -105,5 +125,11 @@ EOT
         $this->assertContains('foo', $comments);
         $this->assertContains('bar', $comments);
         $this->assertContains('baz', $comments);
+
+        $string->removeFlag('fuzzy');
+        $this->assertFalse($string->isFuzzy());
+
+        $string->setFuzzy(true);
+        $this->assertTrue($string->isFuzzy());
     }
 }

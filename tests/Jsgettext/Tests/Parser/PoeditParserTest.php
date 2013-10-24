@@ -25,8 +25,8 @@ class PoeditParserTest extends TestCase
 
         $strings = $file->getStrings();
         $this->assertInstanceOf('\Jsgettext\Poedit\PoeditFile', $file);
-        $this->assertCount(3, $strings);
-        $this->assertCount(9, $file->getString('Edit')->getComments());
+        $this->assertCount(4, $strings);
+        $this->assertCount(9, $file->getString('Edit')->getReferences());
 
         $this->assertTrue($file->hasString('Download \\\'escaped simple quotes\\\''));
         $this->assertTrue($file->hasString('Preview "with double quotes"'));

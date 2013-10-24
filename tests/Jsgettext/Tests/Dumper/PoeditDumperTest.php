@@ -13,7 +13,8 @@ class PoeditDumperTest extends TestCase
     public function setUp()
     {
         $this->file = new PoeditFile();
-        $this->file->addString(new PoeditString('foo', 'bar', true, array('baz', 'foo:56', 'foo:35','bar')));
+        $this->file->addString(new PoeditString('foo', 'bar', array('baz', 'foo:56', 'foo:35','bar')));
+        $this->file->getString('foo')->setFuzzy(true);
         $this->file->addString(new PoeditString('qux', 'bux'));
         $this->file->addString(new PoeditString('bar', 'qux'));
     }
@@ -30,7 +31,12 @@ class PoeditDumperTest extends TestCase
         $parser = new PoeditParser($output);
         $file = $parser->parse();
 
-        $this->assertCount(3, $file->getStrings());
+        $strings = $file->getStrings();
+
+        $this->assertCount(3, $strings);
+        $this->assertEquals($strings[0]->getKey(), 'foo');
+        $this->assertEquals($strings[1]->getKey(), 'qux');
+        $this->assertEquals($strings[2]->getKey(), 'bar');
         $this->assertEquals($file->getString('foo')->getComments(), array('baz', 'foo:56', 'foo:35','bar'));
 
         unlink($output);
@@ -54,6 +60,7 @@ class PoeditDumperTest extends TestCase
         $this->assertTrue($file->getString('foo')->isFuzzy());
 
         $strings = $file->getStrings();
+
         $this->assertEquals($strings[0]->getKey(), 'bar');
         $this->assertEquals($strings[1]->getKey(), 'foo');
         $this->assertEquals($strings[2]->getKey(), 'qux');

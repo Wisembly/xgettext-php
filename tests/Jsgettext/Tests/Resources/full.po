@@ -16,6 +16,9 @@ msgstr ""
 msgid "Preview \"with double quotes\""
 msgstr "Prévisualiser"
 
+# this is a translator comment
+# this is another translator comment
+#. this is an extracted comment
 #: ../../../../../web/frontend/apps/desktop/js/views/view_page_documents.js:188
 #: ../../../../../web/frontend/apps/desktop/js/views/view_page_polls.js:209
 #: ../../../../../web/frontend/apps/desktop/js/views/view_page_surveys.js:242
@@ -31,3 +34,15 @@ msgstr "Editer"
 #: ../../../../../web/frontend/apps/desktop/js/views/view_page_documents.js:190
 msgid "Download \'escaped simple quotes\'"
 msgstr "Télécharger"
+
+# this is a translator comment
+#. this is an extracted comment
+#: ../../../../../web/frontend/apps/desktop/js/views/view_page_documents.js:1337
+#, fuzzy
+#, javascript-format
+msgid ""
+"<p>This is here a particular case where the key is so long that it could not fit"
+"in a single line, on the same msgid line.</p>"
+msgstr ""
+"<p>Same here, the translation is too long to fit on a single line, it is below"
+"msgstr line too</p>"
