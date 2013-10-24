@@ -33,7 +33,7 @@ class PoeditString
     {
         $string = '';
         foreach ($this->comments['comments'] as $comment) {
-            $string .= "# {$comment}" . PHP_EOL;
+            $string .= "#  {$comment}" . PHP_EOL;
         }
 
         foreach ($this->comments['extracteds'] as $extracted) {

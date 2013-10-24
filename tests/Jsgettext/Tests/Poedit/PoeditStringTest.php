@@ -89,8 +89,8 @@ EOT
     {
         $string = new String('Reference text', 'Translated value in whatever languague you want', array('translator comment', 'another one'), array('extracted comment'), array('../../first/file.js:85', '../../second/file.html:42'), array('fuzzy', 'foo'));
         $this->assertEquals($string->__toString(),<<<EOT
-# translator comment
-# another one
+#  translator comment
+#  another one
 #. extracted comment
 #: ../../first/file.js:85
 #: ../../second/file.html:42

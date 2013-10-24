@@ -49,10 +49,10 @@ class PoeditParser implements ParserInterface
         $string = $this->parseMessage($part);
 
         // parse comments
-        preg_match_all('#^\\#( |\. |: |, )(.*?)$#m', $part, $matches, PREG_SET_ORDER);
+        preg_match_all('#^\\#(  |\. |: |, )(.*?)$#m', $part, $matches, PREG_SET_ORDER);
         foreach ($matches as $match) {
             switch ($match[1]) {
-                case ' ':
+                case '  ':
                     $string->addComment($match[2]);
                 break;
                 case '. ':
