@@ -132,4 +132,20 @@ EOT
         $string->setFuzzy(true);
         $this->assertTrue($string->isFuzzy());
     }
+
+    public function testMultilines()
+    {
+        $string = new String(
+            'This is a very long string, to test how PoeditDumper will dump it, using multiline syntax. It should be displayed on three different lines, with 78 chars maximum each.', '');
+        $this->assertEquals($string->__toString(),<<<EOT
+msgid ""
+"This is a very long string, to test how PoeditDumper will dump it, using "
+"multiline syntax. It should be displayed on three different lines, with 78 "
+"chars maximum each."
+msgstr ""
+
+
+EOT
+        );
+    }
 }

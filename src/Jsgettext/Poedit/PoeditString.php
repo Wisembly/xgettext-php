@@ -48,11 +48,38 @@ class PoeditString
             $string .= "#, {$flag}" . PHP_EOL;
         }
 
-        $string .= ($this->isDeprecated() ? '#~ ' : '') . 'msgid "' . str_replace('"', '\\"', $this->key) . '"' . PHP_EOL;
-        $string .= ($this->isDeprecated() ? '#~ ' : '') . 'msgstr "' . str_replace('"', '\\"', $this->value) . '"' . PHP_EOL;
+        $string .= $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgid "', $this->key, '"' . PHP_EOL);
+        $string .= $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgstr "', $this->value, '"' . PHP_EOL);
         $string .= PHP_EOL;
 
         return $string;
+    }
+
+    private function dumpString($prefix, $string, $suffix)
+    {
+        $string = str_replace('"', '\\"', $string);
+        $str = $prefix . $string . $suffix;
+
+        if (mb_strlen($str, 'UTF-8') <= 80) {
+            return $str;
+        }
+
+        $i = 0;
+        $lines[$i] = '';
+        $words = explode(' ', $string);
+
+        foreach ($words as $index => $word) {
+            $ending = $index === count($words) - 1 ? '' : ' ';
+
+            if (mb_strlen($lines[$i] . $word . $ending, 'UTF-8') > 77) {
+                $lines[++$i] = $word . $ending;
+                continue;
+            }
+
+            $lines[$i] .= $word . $ending;
+        }
+
+        return $prefix . '"' . PHP_EOL . '"' . implode('"' . PHP_EOL . '"', $lines) . $suffix;
     }
 
     public function getKey()
