@@ -142,10 +142,6 @@ class PoeditFile
     public function sortStrings()
     {
         uasort($this->strings, function ($a, $b) {
-           if ($a->getKey() === $b->getKey()) {
-               return 0;
-           }
-
            return $a->getKey() < $b->getKey() ? -1 : 1;
         });
 

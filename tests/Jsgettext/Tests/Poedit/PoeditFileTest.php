@@ -48,7 +48,7 @@ class PoeditFileTest extends TestCase
     public function testGetters()
     {
         $file = new PoeditFile();
-        $file->addString(new String('foo', 'bar', array('comment1')));
+        $file->addString(new String('foo', 'bar', array('comment1'), array(), array(), array(), true));
         $file->addString(new String('bar', 'baz', array('comment1')));
         $file->getString('bar')->setFuzzy(true);
         $file->addString(new String('qux'));
@@ -56,10 +56,12 @@ class PoeditFileTest extends TestCase
         $untranslated = $file->getUntranslated();
         $fuzzy = $file->getFuzzy();
         $translated = $file->getTranslated();
+        $deprecated = $file->getDeprecated();
 
         $this->assertCount(2, $translated);
         $this->assertCount(1, $fuzzy);
         $this->assertCount(1, $untranslated);
+        $this->assertCount(1, $deprecated);
     }
 
     public function testComments()
