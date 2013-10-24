@@ -8,9 +8,10 @@ class PoeditString
 {
     private $key;
     private $value;
-    private $comments = array();
+    private $comments;
+    private $deprecated;
 
-    function __construct($key, $value = '', array $comments = array(), array $extracted = array(), array $references = array(), array $flags = array())
+    function __construct($key, $value = '', array $comments = array(), array $extracted = array(), array $references = array(), array $flags = array(), $deprecated = false)
     {
         if (empty($key)) {
             throw new InvalidArgumentException('PoeditString key could not be empty');
@@ -18,6 +19,7 @@ class PoeditString
 
         $this->key = $key;
         $this->value = $value;
+        $this->deprecated = $deprecated;
 
         $this->comments = array(
             'references' => $references,
@@ -46,8 +48,8 @@ class PoeditString
             $string .= "#, {$flag}" . PHP_EOL;
         }
 
-        $string .= 'msgid "'.str_replace('"', '\\"', $this->key).'"' . PHP_EOL;
-        $string .= 'msgstr "'.str_replace('"', '\\"', $this->value).'"' . PHP_EOL;
+        $string .= ($this->isDeprecated() ? '#~ ' : '') . 'msgid "' . str_replace('"', '\\"', $this->key) . '"' . PHP_EOL;
+        $string .= ($this->isDeprecated() ? '#~ ' : '') . 'msgstr "' . str_replace('"', '\\"', $this->value) . '"' . PHP_EOL;
         $string .= PHP_EOL;
 
         return $string;
@@ -89,6 +91,16 @@ class PoeditString
         }
 
         return $this;
+    }
+
+    public function isDeprecated()
+    {
+        return true === $this->deprecated;
+    }
+
+    public function setDeprecated($deprecated)
+    {
+        $this->deprecated = $deprecated;
     }
 
     public function getReferences()

@@ -73,6 +73,12 @@ class PoeditParser implements ParserInterface
     private function parseMessage($part)
     {
         $keyParsed = false;
+        $deprecated = false !== strpos($part, '#~ msgid');
+
+        if (true === $deprecated) {
+            $part = str_replace('#~ ', '', $part);
+        }
+
         $lines = preg_split('#(\r\n|\n){1}#', substr($part, strpos($part, 'msgid')), -1, PREG_SPLIT_NO_EMPTY);
 
         foreach ($lines as $line) {
@@ -104,6 +110,6 @@ class PoeditParser implements ParserInterface
             }
         }
 
-        return new PoeditString(str_replace('\\"', '"', $key), str_replace('\\"', '"', $value));
+        return new PoeditString(str_replace('\\"', '"', $key), str_replace('\\"', '"', $value), array(), array(), array(), array(), $deprecated);
     }
 }

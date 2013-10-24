@@ -46,3 +46,7 @@ msgid ""
 msgstr ""
 "<p>Same here, the translation is too long to fit on a single line, it is below"
 "msgstr line too</p>"
+
+#, fuzzy
+#~ msgid "deprecated"
+#~ msgstr "string"

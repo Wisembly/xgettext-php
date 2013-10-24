@@ -62,6 +62,19 @@ class PoeditFile
         return $translated;
     }
 
+    public function getDeprecated()
+    {
+        $deprecated = array();
+
+        foreach ($this->strings as $string) {
+            if ($string->isDeprecated()) {
+                $deprecated[] = $string;
+            }
+        }
+
+        return $deprecated;
+    }
+
     public function setHeaders($headers)
     {
         $this->headers = $headers;
