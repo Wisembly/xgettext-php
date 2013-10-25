@@ -113,7 +113,15 @@ class PoeditFile
         if (!$this->hasString($key)) {
             $this->strings[$key] = $string;
         } else {
-            $this->strings[$key]->addComments($string->getComments());
+            if ($this->getString($key)->isEqualTo($string)) {
+                $this->strings[$key]
+                    ->addComments($string->getComments())
+                    ->addExtracteds($string->getExtracteds())
+                    ->addReferences($string->getReferences())
+                    ->addFlags($string->getFlags());
+            } else {
+                $this->strings[$key] = $string;
+            }
         }
 
         return $this;

@@ -120,6 +120,18 @@ class PoeditString
         return $this;
     }
 
+    public function isEqualTo(PoeditString $string) {
+        if ($string->getKey() !== $this->getKey()) {
+            return false;
+        }
+
+        if ($string->getValue() !== $this->getValue()) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function isDeprecated()
     {
         return true === $this->deprecated;
@@ -192,7 +204,7 @@ class PoeditString
 
     public function getFlags()
     {
-        return $this->$flags['flags'];
+        return $this->comments['flags'];
     }
 
     public function addFlag($flag)

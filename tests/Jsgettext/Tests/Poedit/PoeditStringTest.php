@@ -131,6 +131,19 @@ EOT
 
         $string->setFuzzy(true);
         $this->assertTrue($string->isFuzzy());
+
+        $string = new String('foo', 'bar', array('foo'), array('bar'), array('baz'), array('qux'));
+        $string->addComment('bar');
+        $string->addExtracted('baz');
+        $string->addReference('qux');
+        $string->addFlag('fuzzy');
+
+        // accessors
+        $this->assertTrue($string->isFuzzy());
+        $this->assertTrue($string->hasComment('foo'));
+        $this->assertTrue($string->hasExtracted('bar'));
+        $this->assertTrue($string->hasReference('baz'));
+        $this->assertTrue($string->hasFlag('qux'));
     }
 
     public function testMultilines()
