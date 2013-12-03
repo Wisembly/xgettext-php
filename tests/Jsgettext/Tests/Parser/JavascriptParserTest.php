@@ -23,5 +23,7 @@ class JavascriptParserTest extends TestCase
 
         $this->assertCount(6, $content);
         $this->assertInstanceOf('\Jsgettext\Poedit\PoeditString', $content['hello %placeholder%']);
+        $string = $content['test string title'];
+        $this->assertCount(2, $string->getReferences());
     }
 }

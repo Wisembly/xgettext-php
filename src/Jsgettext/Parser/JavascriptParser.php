@@ -33,10 +33,10 @@ class JavascriptParser implements ParserInterface
                 $str = str_replace("\\$delimiter", $delimiter, $str);
 
                 if (!in_array($str, array_keys($this->strings))) {
-                    $this->strings[$str] = new PoeditString($str, '', array(), array(), array($comment));
-                } else {
-                    $this->strings[$str]->addComment($comment);
+                    $this->strings[$str] = new PoeditString($str, '');
                 }
+
+                $this->strings[$str]->addReference($comment);
             }
 
             $line_count++;
