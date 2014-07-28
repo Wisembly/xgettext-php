@@ -2,6 +2,8 @@
 
 namespace Jsgettext\Parser;
 
+use \InvalidArgumentException;
+
 use Jsgettext\Poedit\PoeditString,
     Jsgettext\Poedit\PoeditFile;
 
@@ -12,6 +14,10 @@ class PoeditParser implements ParserInterface
 
     public function __construct($file)
     {
+        if (empty($file)) {
+            throw new InvalidArgumentException('You must provide a valid file to be parsed', 1);
+        }
+
         $this->file = $file;
         $this->poEditFile = new PoeditFile();
     }
@@ -24,6 +30,11 @@ class PoeditParser implements ParserInterface
     {
         $strings = array();
         $content = file_get_contents($this->file);
+
+        if (false === $content) {
+            throw new InvalidArgumentException('You must provide a valid file to be parsed', 1);
+        }
+
         $parts = preg_split('#(\r\n|\n){2}#', $content, -1, PREG_SPLIT_NO_EMPTY);
 
         $parts = $this->parseHeaders($parts);

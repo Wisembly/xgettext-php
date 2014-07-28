@@ -2,6 +2,8 @@
 
 namespace Jsgettext\Dumper;
 
+use \InvalidArgumentException;
+
 use Jsgettext\File\File,
     Jsgettext\Poedit\PoeditFile,
     Jsgettext\Poedit\PoeditString;
@@ -12,6 +14,10 @@ class PoeditDumper implements DumperInterface
 
     public function __construct($file)
     {
+        if (empty($file)) {
+            throw new InvalidArgumentException('You must provide a valid file to dump the translations', 1);
+        }
+
         $this->file = $file;
     }
 
