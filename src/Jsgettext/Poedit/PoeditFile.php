@@ -54,7 +54,7 @@ class PoeditFile
         $translated = array();
 
         foreach ($this->strings as $string) {
-            if (!$string->isEmpty()) {
+            if (!$string->isEmpty() && !$string->isFuzzy()) {
                 $translated[] = $string;
             }
         }

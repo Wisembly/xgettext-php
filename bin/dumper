@@ -1,0 +1,58 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use \Exception;
+
+use Jsgettext\Dumper\JsonDumper,
+    Jsgettext\Parser\PoeditParser;
+
+$options = array(
+    '-i' => null,
+    '-o' => null,
+    '-f' => 'json'
+);
+$i = 1;
+
+while ($i < count($argv)) {
+    if (preg_match('#^-[a-z]$#i', $argv[$i])) {
+        $options[$argv[$i]] = isset($argv[$i+1]) ? trim($argv[$i+1]) : true;
+        $i += 2;
+    }
+}
+
+try {
+    if (!in_array($options['-f'], array('json'))) {
+        throw new Exception($options['-f'] . " format not supported", 1);
+    }
+
+    $dumper = new JsonDumper($options['-o']);
+    $parser = new PoeditParser($options['-i']);
+
+    $dumper->dump($parser->parse());
+} catch (Exception $e) {
+    fwrite(STDOUT, $e->getMessage() . <<<EOT
+
+
+Usage php dumper -o [OUTPUT] -f [FORMAT] [FILE]
+
+    -i [INPUT]
+        specify the .po input file where the keys are translated
+        eg: ../../file.po
+    -o [OUTPUT]
+        specify the output file where the keys will be dumped
+        eg: ../../file.json
+    -f [FORMAT]
+        specify the format you'd like to dump your translations
+        eg: json
+    [FILES]
+        source file destination file
+        eg: source.po destination.json
+
+
+EOT
+        );
+}

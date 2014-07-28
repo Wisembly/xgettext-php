@@ -58,7 +58,7 @@ class PoeditFileTest extends TestCase
         $translated = $file->getTranslated();
         $deprecated = $file->getDeprecated();
 
-        $this->assertCount(2, $translated);
+        $this->assertCount(1, $translated);
         $this->assertCount(1, $fuzzy);
         $this->assertCount(1, $untranslated);
         $this->assertCount(1, $deprecated);

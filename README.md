@@ -27,11 +27,18 @@ The recommended way to install Jsgettext is through
 
 # Usage
 
+## Parser
+
 Simply create a new parser in poEdit (name it for example `Javascript`)`.
 Then, set up jsgettext like this:
 
 ![configure jsgettext parser](https://github.com/Wisembly/jsgettext/raw/master/doc/screen.png)
 
+## JSON Dumper
+
+```
+$ bin/dumper -i input.po -o output.json
+```
 
 # Licence
 

@@ -7,7 +7,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use \Exception;
 
-use Jsgettext\Jsgettext;
+use Jsgettext\Jsgettext,
+    Jsgettext\File\Finder;
 
 $options = array(
     'files' => array(),
@@ -21,7 +22,11 @@ while ($i < count($argv)) {
         $options[$argv[$i]] = isset($argv[$i+1]) ? trim($argv[$i+1]) : true;
         $i += 2;
     } else {
-        $options['files'][] = $argv[$i];
+        if (is_dir($argv[$i])) {
+            $options['files'] = array_merge($options['files'], Finder::findr($argv[$i], array('.js', '.html')));
+        } else {
+            $options['files'][] = $argv[$i];
+        }
         $i++;
     }
 }
@@ -32,7 +37,7 @@ try {
     fwrite(STDOUT, $e->getMessage() . <<<EOT
 
 
-Usage php jsgettext -o [OUTPUT] -k [KEYWORDS] [FILES]   
+Usage php jsgettext -o [OUTPUT] -k [KEYWORDS] [FILES]
 
     -o [OUTPUT]
         specify the .po output file where the keys will be dumped

@@ -6,7 +6,7 @@ use Jsgettext\File\File,
     Jsgettext\Poedit\PoeditFile,
     Jsgettext\Poedit\PoeditString;
 
-class PoeditDumper implements DumperInterface
+class JsonDumper implements DumperInterface
 {
     private $file;
 
@@ -16,24 +16,25 @@ class PoeditDumper implements DumperInterface
     }
 
     /**
-    *   Dump PoeditFile into .po file
+    *   Dump PoeditFile translated keys into key/value .json file
     *
     *   @param PoeditFile   $file
     *   @param string       $filename
-    *   @param boolean      $sort       if enabled, sort strings and their comments. implemented to avoid too many git conflicts
     *
     *   @return boolean
     */
-    public function dump(PoeditFile $file, $filename = null, $sort = false)
+    public function dump(PoeditFile $file, $filename = null)
     {
         $filename = null !== $filename ? $filename : $this->file;
-        $content = $file->getHeaders() . PHP_EOL . PHP_EOL;
+        $content = array();
 
-        $strings = true === $sort ? $file->sortStrings()->getStrings() : $file->getStrings();
+        $strings = $file->getTranslated();
 
         foreach ($strings as $string) {
-            $content .= true === $sort ? $string->sortReferences()->sortComments()->sortExtracteds()->sortFlags() : $string;
+            $content[$string->getKey()] = $string->getValue();
         }
+
+        $content = json_encode($content, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
         // ensure that path and file exists
         File::mkdirr(substr($filename, 0, strrpos($filename, '/')));

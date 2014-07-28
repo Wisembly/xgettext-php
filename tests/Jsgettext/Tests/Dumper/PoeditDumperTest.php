@@ -42,13 +42,11 @@ class PoeditDumperTest extends TestCase
         unlink($output);
     }
 
-    public function testSortedDumpWithOutputRecursiveDirectories()
+    public function testSortedDump()
     {
         $filename = $this->generateRandomFileName();
         $basePath = __DIR__ . '/../Resources/dump';
-        $dir1 = $this->generateRandomFileName(null);
-        $dir2 = $this->generateRandomFileName(null);
-        $output = $basePath . '/' . $dir1 . '/' . $dir2 . '/' . $filename;
+        $output = $basePath . '/' . $filename;
 
         $dumper = new PoeditDumper($output);
         $dumper->dump($this->file, null, true);
@@ -67,7 +65,5 @@ class PoeditDumperTest extends TestCase
         $this->assertEquals($file->getString('foo')->getComments(), array('bar', 'baz', 'foo:35', 'foo:56'));
 
         unlink($output);
-        rmdir($basePath . '/' . $dir1 . '/' . $dir2);
-        rmdir($basePath . '/' . $dir1);
     }
 }
