@@ -34,7 +34,7 @@ class JsonDumper implements DumperInterface
             $content[$string->getKey()] = $string->getValue();
         }
 
-        $content = json_encode($content, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+        $content = json_encode($content, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES);
 
         // ensure that path and file exists
         File::mkdirr(substr($filename, 0, strrpos($filename, '/')));
