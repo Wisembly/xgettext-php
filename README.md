@@ -40,6 +40,11 @@ Then, set up jsgettext like this:
 $ bin/dumper -i input.po -o output.json
 ```
 
-# Licence
+## Requirements
+
+PHP >= 5.4
+
+
+## Licence
 
 Jsgettext is released under the MIT License. See the bundled LICENSE file for details.
