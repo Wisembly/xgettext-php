@@ -17,6 +17,7 @@ class JsonDumperTest extends TestCase
         $this->file->getString('foo')->setFuzzy(true);
         $this->file->addString(new PoeditString('qux', 'bux'));
         $this->file->addString(new PoeditString('bar', 'qux'));
+        $this->file->addString(new PoeditString('bar\n\tbaz', 'bar\n\tbaz'));
     }
 
     public function testDump()
@@ -29,15 +30,9 @@ class JsonDumperTest extends TestCase
         $dumper->dump($this->file);
 
         $parser = new PoeditParser($output);
-        $file = file_get_contents($output);
+        $content = file_get_contents($output);
 
-        $strings = json_decode($file, true);
-
-        $this->assertCount(2, $strings);
-        $this->assertEquals($strings['qux'], 'bux');
-        $this->assertEquals($strings['bar'], 'qux');
-        $this->assertFalse(isset($strings['foo']));
-
+        $this->assertEquals($content, '{"qux":"bux","bar":"qux","bar\n\tbaz":"bar\n\tbaz"}');
         unlink($output);
     }
 }

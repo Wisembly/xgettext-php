@@ -42,7 +42,7 @@ $ bin/dumper -i input.po -o output.json
 
 ## Requirements
 
-PHP >= 5.4
+PHP >= 5.3
 
 
 ## Licence
