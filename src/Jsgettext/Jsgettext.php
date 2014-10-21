@@ -11,7 +11,14 @@ use Jsgettext\Poedit\PoeditFile,
 
 class Jsgettext
 {
-    public function __construct(array $files, $output, array $keywords = array('_'), $cli = false)
+    public function __construct
+    (
+        array $files, 
+        $output, 
+        array $keywords = array('_'), 
+        $cli = false,
+        $enc = 'UTF-8'
+    )
     {
         $this->cli = $cli;
 
@@ -31,6 +38,6 @@ class Jsgettext
         }
 
         $poeditDumper = new PoeditDumper($output);
-        $poeditDumper->dump($poeditFile);
+        $poeditDumper->dump($poeditFile, null, false, $enc);
     }
 }
