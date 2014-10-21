@@ -35,6 +35,11 @@ class PoeditDumper implements DumperInterface
         $filename = null !== $filename ? $filename : $this->file;
         $content = $file->getHeaders() . PHP_EOL . PHP_EOL;
 
+        $content .= "\"Content-Type: text/plain; charset=UTF-8\\n\"" . PHP_EOL .
+                    "\"Content-Transfer-Encoding: 8bit\\n\"" . PHP_EOL .
+                    "\"X-Generator: Poedit 1.5.4\\n\"" . PHP_EOL .
+                    "\"X-Poedit-SourceCharset: UTF-8\\n\"" . PHP_EOL;
+
         $strings = true === $sort ? $file->sortStrings()->getStrings() : $file->getStrings();
 
         foreach ($strings as $string) {
