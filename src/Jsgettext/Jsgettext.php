@@ -11,14 +11,7 @@ use Jsgettext\Poedit\PoeditFile,
 
 class Jsgettext
 {
-    public function __construct
-    (
-        array $files, 
-        $output, 
-        array $keywords = array('_'), 
-        $cli = false,
-        $enc = 'UTF-8'
-    )
+    public function __construct(array $files, $output, array $keywords = array('_'), $enc = 'UTF-8', $cli = false)
     {
         $this->cli = $cli;
 

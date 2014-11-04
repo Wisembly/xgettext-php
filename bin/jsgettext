@@ -48,13 +48,7 @@ while ($i < count($argv)) {
 }
 
 try {
-    new Jsgettext(
-        $options['files'], 
-        $options['-o'], 
-        explode(' ', $options['-k']), 
-        true,
-        $options['-c']
-    );
+    new Jsgettext($options['files'], $options['-o'], explode(' ', $options['-k']), $options['-c'], true);
 } catch (Exception $e) {
     fwrite(STDOUT, $e->getMessage() . <<<EOT
 
