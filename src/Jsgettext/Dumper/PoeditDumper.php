@@ -27,17 +27,16 @@ class PoeditDumper implements DumperInterface
     *   @param PoeditFile   $file
     *   @param string       $filename
     *   @param boolean      $sort       if enabled, sort strings and their comments. implemented to avoid too many git conflicts
-    *   @param string       $enc
+    *   @param string       $charset
     *
     *   @return boolean
     */
-    public function dump(PoeditFile $file, $filename = null, $sort = false, $enc = 'UTF-8')
+    public function dump(PoeditFile $file, $filename = null, $sort = false, $charset = 'UTF-8')
     {
         $filename = null !== $filename ? $filename : $this->file;
         $content = $file->getHeaders() . PHP_EOL . PHP_EOL;
 
-        $content .= "\"Content-Type: text/plain; charset=" . $enc . "\\n\"" . PHP_EOL;
-                    // "\"X-Poedit-SourceCharset: UTF-8\\n\"" . PHP_EOL;
+        $content .= "\"Content-Type: text/plain; charset=" . $charset . "\\n\"" . PHP_EOL;
 
         $strings = true === $sort ? $file->sortStrings()->getStrings() : $file->getStrings();
 

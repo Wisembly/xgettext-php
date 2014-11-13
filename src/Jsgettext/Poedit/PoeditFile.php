@@ -15,7 +15,7 @@ class PoeditFile
         $this->headers = null === $headers ? 'msgid ""' . PHP_EOL . 'msgstr ""' : $headers;
 
         foreach ($strings as $string) {
-            if (!($string instanceof PoeditString)) {
+            if (!($string instanceof AbstractPoeditString)) {
                 throw new InvalidArgumentException('You must give a PoeditStrings array');
             }
 
@@ -106,7 +106,7 @@ class PoeditFile
         return isset($this->strings[$key]);
     }
 
-    public function addString(PoeditString $string)
+    public function addString(AbstractPoeditString $string)
     {
         $key = $string->getKey();
 
