@@ -1,6 +1,6 @@
 <?php
 
-namespace Jsgettext\PoEdit;
+namespace Jsgettext\Poedit;
 
 use \InvalidArgumentException;
 
