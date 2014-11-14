@@ -40,6 +40,11 @@ class PoeditPluralString extends AbstractPoeditString
         return $string;
     }
 
+    public function isEmpty()
+    {
+        return empty($this->plurals);
+    }
+
     public function getValue()
     {
         throw new InvalidArgumentException('Could not set the a value of a PoeditPluralString', 1);

@@ -34,4 +34,9 @@ class PoeditString extends AbstractPoeditString
 
         return $string;
     }
+
+    public function isEmpty()
+    {
+        return empty($this->value);
+    }
 }

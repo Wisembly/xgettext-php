@@ -79,11 +79,6 @@ abstract class AbstractPoeditString
         return $this;
     }
 
-    public function isEmpty()
-    {
-        return empty($this->value);
-    }
-
     public function isFuzzy()
     {
         return $this->hasFlag('fuzzy');

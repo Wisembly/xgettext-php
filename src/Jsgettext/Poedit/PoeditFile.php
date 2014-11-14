@@ -87,6 +87,22 @@ class PoeditFile
         return $this->headers;
     }
 
+    public function addHeader($header)
+    {
+        $this->headers .= $header . PHP_EOL;
+
+        return $this;
+    }
+
+    public function getLang()
+    {
+        if (1 !== preg_match('/Language: ([a-z]{2,3})/i', $this->headers, $match)) {
+            return null;
+        }
+
+        return $match[1];
+    }
+
     public function getStrings()
     {
         return array_values($this->strings);
