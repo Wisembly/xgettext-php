@@ -4,5 +4,5 @@ namespace Jsgettext\Parser;
 
 interface ParserInterface
 {
-    public function parse();
+    public function parse($string = null);
 }

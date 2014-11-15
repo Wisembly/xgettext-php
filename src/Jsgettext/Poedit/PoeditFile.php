@@ -1,6 +1,6 @@
 <?php
 
-namespace Jsgettext\PoEdit;
+namespace Jsgettext\Poedit;
 
 use \InvalidArgumentException;
 
@@ -15,7 +15,7 @@ class PoeditFile
         $this->headers = null === $headers ? 'msgid ""' . PHP_EOL . 'msgstr ""' : $headers;
 
         foreach ($strings as $string) {
-            if (!($string instanceof PoeditString)) {
+            if (!($string instanceof AbstractPoeditString)) {
                 throw new InvalidArgumentException('You must give a PoeditStrings array');
             }
 
@@ -87,6 +87,22 @@ class PoeditFile
         return $this->headers;
     }
 
+    public function addHeader($header)
+    {
+        $this->headers .= $header . PHP_EOL;
+
+        return $this;
+    }
+
+    public function getLang()
+    {
+        if (1 !== preg_match('/Language: ([a-z]{2,3})/i', $this->headers, $match)) {
+            return null;
+        }
+
+        return $match[1];
+    }
+
     public function getStrings()
     {
         return array_values($this->strings);
@@ -106,7 +122,7 @@ class PoeditFile
         return isset($this->strings[$key]);
     }
 
-    public function addString(PoeditString $string)
+    public function addString(AbstractPoeditString $string)
     {
         $key = $string->getKey();
 

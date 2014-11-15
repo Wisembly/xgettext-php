@@ -5,6 +5,7 @@ namespace Jsgettext\Tests\Dumper;
 use Jsgettext\Tests\TestCase,
     Jsgettext\Poedit\PoeditFile,
     Jsgettext\Poedit\PoeditString,
+    Jsgettext\Poedit\PoeditPluralString,
     Jsgettext\Dumper\PoeditDumper,
     Jsgettext\Parser\PoeditParser;
 
@@ -53,17 +54,37 @@ class PoeditDumperTest extends TestCase
 
         $parser = new PoeditParser($output);
         $file = $parser->parse();
-
-        $this->assertCount(3, $file->getStrings());
-        $this->assertTrue($file->getString('foo')->isFuzzy());
+        unlink($output);
 
         $strings = $file->getStrings();
+        $this->assertCount(3, $strings);
+        $this->assertTrue($file->getString('foo')->isFuzzy());
 
         $this->assertEquals($strings[0]->getKey(), 'bar');
         $this->assertEquals($strings[1]->getKey(), 'foo');
         $this->assertEquals($strings[2]->getKey(), 'qux');
         $this->assertEquals($file->getString('foo')->getComments(), array('bar', 'baz', 'foo:35', 'foo:56'));
+    }
 
+    public function testPluralDump()
+    {
+        $this->file = new PoeditFile();
+        $this->file->addString(new PoeditPluralString('foo', 'foo plural', array('plural one', 'plural two', 'last plural')));
+
+        $filename = $this->generateRandomFileName();
+        $basePath = __DIR__ . '/../Resources/dump';
+        $output = $basePath . '/' . $filename;
+
+        $dumper = new PoeditDumper($output);
+        $dumper->dump($this->file, null, true);
+
+        $parser = new PoeditParser($output);
+        $file = $parser->parse();
         unlink($output);
+
+        $strings = $file->getStrings();
+        $this->assertCount(1, $strings);
+        $this->assertTrue($file->hasString('foo'));
+        $this->assertEquals($file->getString('foo')->getPlurals(), array('plural one', 'plural two', 'last plural'));
     }
 }

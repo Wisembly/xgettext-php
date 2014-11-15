@@ -41,10 +41,10 @@ msgstr "Télécharger"
 #, fuzzy
 #, javascript-format
 msgid ""
-"<p>This is here a particular case where the key is so long that it could not fit"
+"<p>This is here a particular case where the key is so long that it could not fit "
 "in a single line, on the same msgid line.</p>"
 msgstr ""
-"<p>Same here, the translation is too long to fit on a single line, it is below"
+"<p>Same here, the translation is too long to fit on a single line, it is below "
 "msgstr line too</p>"
 
 #, fuzzy

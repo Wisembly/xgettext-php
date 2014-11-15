@@ -5,6 +5,7 @@ namespace Jsgettext\Parser;
 use \InvalidArgumentException;
 
 use Jsgettext\Poedit\PoeditString,
+    Jsgettext\Poedit\PoeditPluralString,
     Jsgettext\Poedit\PoeditFile;
 
 class PoeditParser implements ParserInterface
@@ -26,10 +27,10 @@ class PoeditParser implements ParserInterface
     *   Parse a .po file and return a PoeditFile
     *   @return PoeditFile
     */
-    public function parse()
+    public function parse($string = null)
     {
         $strings = array();
-        $content = file_get_contents($this->file);
+        $content = null !== $string ? $string : file_get_contents($this->file);
 
         if (false === $content) {
             throw new InvalidArgumentException('You must provide a valid file to be parsed', 1);
@@ -81,9 +82,14 @@ class PoeditParser implements ParserInterface
         $this->poEditFile->addString($string);
     }
 
+    // TODO: refacto
     private function parseMessage($part)
     {
-        $keyParsed = false;
+        $step = null;
+        $key = null;
+        $value = null;
+        $pluralForm = null;
+        $plurals = array();
         $deprecated = false !== strpos($part, '#~ msgid');
 
         if (true === $deprecated) {
@@ -100,27 +106,61 @@ class PoeditParser implements ParserInterface
             }
 
             if ('msgid "' === substr($line, 0, 7)) {
+                $step = 'msgid';
                 $key = substr($line, 7, -1);
                 continue;
             }
 
             if ('msgstr "' === substr($line, 0, 8)) {
-                $keyParsed = true;
+                $step = 'msgstr';
                 $value = substr($line, 8, -1);
+                continue;
+            }
+
+            if ('msgid_plural "' === substr($line, 0, 14)) {
+                $step = 'msgid_plural';
+                $pluralForm = substr($line, 14, -1);
+                continue;
+            }
+
+            if ('msgstr[' === substr($line, 0, 7)) {
+                $step = 'msgstr[';
+                $index = (int) substr($line, 7, 1);
+                $plural = substr($line, 11, -1);
+                $plurals[$index] = $plural;
                 continue;
             }
 
             if ('"' === $line[0]) {
                 $val = substr($line, 1, -1);
 
-                if (false === $keyParsed) {
-                    $key .= $val;
-                } else {
-                    $value .= $val;
+                switch ($step) {
+                    case 'msgid':
+                        $key .= $val;
+                        break;
+                    case 'msgstr':
+                        $value .= $val;
+                        break;
+                    case 'msgid_plural':
+                        $pluralForm .= $val;
+                        break;
+                    case 'msgstr[':
+                        $plurals[$index] .= $val;
+                        break;
+                    default:
+                        throw new InvalidArgumentException('Parsing error', 1);
                 }
             }
         }
 
-        return new PoeditString(str_replace('\\"', '"', $key), str_replace('\\"', '"', $value), array(), array(), array(), array(), $deprecated);
+        if (null !== $pluralForm) {
+            $plurals = array_map(function ($plural) {
+                return str_replace('\\"', '"', $plural);
+            }, $plurals);
+
+            return new PoeditPluralString(str_replace('\\"', '"', $key), str_replace('\\"', '"', $pluralForm), $plurals, array(), array(), array(), array(), $deprecated);
+        } else {
+            return new PoeditString(str_replace('\\"', '"', $key), str_replace('\\"', '"', $value), array(), array(), array(), array(), $deprecated);
+        }
     }
 }

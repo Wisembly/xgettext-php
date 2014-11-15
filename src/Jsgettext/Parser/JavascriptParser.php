@@ -17,7 +17,7 @@ class JavascriptParser implements ParserInterface
         $this->strings = array();
     }
 
-    public function parse()
+    public function parse($string = null)
     {
         $line_count = 1;
         $keywords = implode('|', $this->keywords);
