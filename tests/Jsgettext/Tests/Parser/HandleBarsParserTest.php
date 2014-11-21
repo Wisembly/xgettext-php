@@ -5,7 +5,7 @@ namespace Jsgettext\Tests\Parser;
 use Jsgettext\Tests\TestCase,
     Jsgettext\Parser\HandleBarsParser;
 
-class JavascriptParserTest extends TestCase
+class HandleBarsParserTest extends TestCase
 {
     public function testParseTestJsFile()
     {
