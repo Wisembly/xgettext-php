@@ -15,6 +15,9 @@ function test(param) {
         var s7 = __("string 2: \"escaped double quotes\"");
         var s8 = __('string 2: \'escaped single quotes\'');
 
+        var s4 = _n("singular text", "{{ count}} plural", 42);
+        var s4 = _n('singular text again', "another {{ count}} plural", 7);
+
         // "string in comment"
         //;
 
