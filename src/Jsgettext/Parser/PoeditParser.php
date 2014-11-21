@@ -8,7 +8,7 @@ use Jsgettext\Poedit\PoeditString,
     Jsgettext\Poedit\PoeditPluralString,
     Jsgettext\Poedit\PoeditFile;
 
-class PoeditParser implements ParserInterface
+class PoeditParser
 {
     protected $file;
     protected $poEditFile;
@@ -22,6 +22,9 @@ class PoeditParser implements ParserInterface
         $this->file = $file;
         $this->poEditFile = new PoeditFile();
     }
+
+    public function setPatterns()
+    {}
 
     /**
     *   Parse a .po file and return a PoeditFile
