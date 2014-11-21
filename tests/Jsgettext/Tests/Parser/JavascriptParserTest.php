@@ -14,7 +14,8 @@ class JavascriptParserTest extends TestCase
 
         $this->assertCount(9, $content);
         $this->assertInstanceOf('\Jsgettext\Poedit\PoeditString', $content['Hello world, testing jsgettext']);
-        $this->assertEquals('test.js:6', substr($content['Test string']->getReferences()[0], -9));
+        $references = $content['Test string']->getReferences();
+        $this->assertEquals('test.js:6', substr($references[0], -9));
     }
 
     public function testParseTestJsFileOnlyPlurals()

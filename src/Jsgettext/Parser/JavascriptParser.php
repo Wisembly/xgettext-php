@@ -21,7 +21,7 @@ class JavascriptParser implements ParserInterface
     // make keword list and argument positions
     private function handleKeywords($keywords)
     {
-        $kwds = [];
+        $kwds = array();
 
         foreach ($keywords as $keyword) {
             if (false !== ($pos = strpos($keyword, ':'))) {
@@ -31,7 +31,7 @@ class JavascriptParser implements ParserInterface
                 continue;
            }
 
-           $kwds[$keyword] = [1];
+           $kwds[$keyword] = array(1);
         }
 
         return $kwds;

@@ -25,30 +25,40 @@ use \Exception;
 use Jsgettext\Jsgettext,
     Jsgettext\File\Finder;
 
-$options = array(
+$i = 1;
+$input = array();
+$defaults = array(
     'files' => array(),
     '-o'    => null,
-    '-k'    => '_',
-    '-c'    => 'UTF-8'
+    '-k'    => array('_', 'gettext', 'ngettext:1,2'),
+    '-c'    => 'UTF-8',
+    '-e'    => array('js', 'html')
 );
-$i = 1;
 
 while ($i < count($argv)) {
     if (preg_match('#^-[a-z]$#i', $argv[$i])) {
-        $options[$argv[$i]] = isset($argv[$i+1]) ? trim($argv[$i+1]) : true;
+        $val = isset($argv[$i+1]) ? trim($argv[$i+1]) : true;
+
+        if (!isset($input[$argv[$i]])) {
+            $input[$argv[$i]] = is_array($defaults[$argv[$i]]) ? array() : null;
+        }
+
+        $input[$argv[$i]] = is_array($defaults[$argv[$i]]) ? array_merge($input[$argv[$i]], array($val)) : $val;
         $i += 2;
     } else {
         if (is_dir($argv[$i])) {
-            $options['files'] = array_merge($options['files'], Finder::findr($argv[$i], array('.js', '.html')));
+            $input['files'] = array_merge($input['files'], Finder::findr($argv[$i], $defaults['-e']));
         } else {
-            $options['files'][] = $argv[$i];
+            $input['files'][] = $argv[$i];
         }
         $i++;
     }
 }
 
+$input = array_merge($defaults, $input);
+
 try {
-    new Jsgettext($options['files'], $options['-o'], explode(' ', $options['-k']), $options['-c'], true);
+    new Jsgettext($input['files'], $input['-o'], $input['-k'], $input['-c'], true);
 } catch (Exception $e) {
     fwrite(STDOUT, $e->getMessage() . <<<EOT
 
@@ -56,17 +66,21 @@ try {
 Usage php jsgettext -o [OUTPUT] -k [KEYWORDS] -c [ENCODING] [FILES]
 
     -o [OUTPUT]
+        REQUIRED
         specify the .po output file where the keys will be dumped
-        eg: ../../file.po
+        eg: -o "../../file.po"
     -k [KEYWORDS]
         specify the keywords used to find in the files the strings to be parsed
-        eg: __ _ i18n_
+        eg: -k "__" -k "ngettext:1,2"
+        default: "_" "gettext" "ngettext:1,2"
     -c [ENCODING]
         specify the encoding of the .po output file
-        eg: UTF-8
+        eg: -c "ISO-8859"
+        default: "UTF-8"
     [FILES]
+        REQUIRED
         files list to be parsed
-        eg: ../file.js ../anotherfile.html ../still/anotherfile.js
+        eg: "../file.js" "../anotherfile.html" "../still/anotherfile.js"
 
 
 EOT
