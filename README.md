@@ -31,14 +31,14 @@ The recommended way to install Xgettext is through
 Simply create a new parser in Poedit (name it for example `Javascript`)`.
 Then, set up xgettext like this:
 
-![configure xgettext parser](https://github.com/Wisembly/xgettext/raw/master/doc/js.png)
+![configure xgettext parser](https://raw.githubusercontent.com/Wisembly/xgettext-php/master/doc/js.png)
 
 ### Handlebars parser
 
 Same like above, just add `-l "handlebars"` in yout `xgettext` call to stipulate you want
 to use handlebars parser with xgettext-php.
 
-![configure xgettext parser](https://github.com/Wisembly/xgettext/raw/master/doc/hbs.png)
+![configure xgettext parser](https://raw.githubusercontent.com/Wisembly/xgettext-php/master/doc/hbs.png)
 
 
 ## JSON Dumper
