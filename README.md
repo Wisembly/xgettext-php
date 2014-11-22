@@ -1,14 +1,10 @@
 # Xgettext
 
-[![Build Status](https://travis-ci.org/Wisembly/xgettext.png?branch=master)](https://travis-ci.org/Wisembly/xgettext)
+[![Build Status](https://travis-ci.org/Wisembly/xgettext-php.png?branch=master)](https://travis-ci.org/Wisembly/xgettext-php)
 
-Parser for poEdit implemented in PHP. use same API as xgettext. We use it for parsing our
-javascript and html templates files in our Backbone apps.
-Caution: this is **NOT** an xgettext javascript language implementation, this is **JUST**
-a parser for many files (that we use for our *.js and *.html files) and have no language
-syntax check implementation.
-
-Heavily inspired by [xgettext](https://code.google.com/p/xgettext/)
+xgettext PHP implementation. Curently provides 2 parsers:
+- Javascript parser
+- Handlebars parser
 
 
 # Install
@@ -19,7 +15,7 @@ The recommended way to install Xgettext is through
 ``` json
 {
     "require": {
-        "wisembly/xgettext": "@stable"
+        "wisembly/xgettext-php": "@stable"
     }
 }
 ```

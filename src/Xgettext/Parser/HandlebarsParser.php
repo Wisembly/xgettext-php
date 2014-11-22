@@ -2,7 +2,7 @@
 
 namespace Xgettext\Parser;
 
-class HandleBarsParser extends AbstractParser implements ParserInterface
+class HandlebarsParser extends AbstractParser implements ParserInterface
 {
     public function getFuncRegex()
     {

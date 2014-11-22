@@ -3,9 +3,9 @@
 namespace Xgettext\Tests\Parser;
 
 use Xgettext\Tests\TestCase,
-    Xgettext\Parser\HandleBarsParser;
+    Xgettext\Parser\HandlebarsParser;
 
-class HandleBarsParserTest extends TestCase
+class HandlebarsParserTest extends TestCase
 {
     public function testParseTestJsFile()
     {
