@@ -12,4 +12,4 @@ EOT
     );
 }
 
-$loader->add('Jsgettext\Tests', __DIR__);
+$loader->add('Xgettext\Tests', __DIR__);

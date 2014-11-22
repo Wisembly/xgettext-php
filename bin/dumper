@@ -22,8 +22,8 @@ require_once JSGETTEXT_COMPOSER_INSTALL;
 
 use \Exception;
 
-use Jsgettext\Dumper\JsonDumper,
-    Jsgettext\Parser\PoeditParser;
+use Xgettext\Dumper\JsonDumper,
+    Xgettext\Parser\PoeditParser;
 
 $options = array(
     '-i' => null,
