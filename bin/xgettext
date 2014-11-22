@@ -32,7 +32,8 @@ $defaults = array(
     '-o'    => null,
     '-k'    => array('_', 'gettext', 'ngettext:1,2'),
     '-c'    => 'UTF-8',
-    '-e'    => array('js', 'html')
+    '-e'    => array('js', 'html'),
+    '-l'    => 'Javascript',
 );
 
 while ($i < count($argv)) {
@@ -58,7 +59,7 @@ while ($i < count($argv)) {
 $input = array_merge($defaults, $input);
 
 try {
-    new Xgettext($input['files'], $input['-o'], $input['-k'], $input['-c'], true);
+    new Xgettext($input['files'], $input['-o'], $input['-k'], $input['-l'], $input['-c'], true);
 } catch (Exception $e) {
     fwrite(STDOUT, $e->getMessage() . <<<EOT
 
@@ -77,6 +78,10 @@ Usage xgettext -o [OUTPUT] -k [KEYWORDS] -c [ENCODING] [FILES]
         specify the encoding of the .po output file
         eg: -c "ISO-8859"
         default: "UTF-8"
+    -l [LANGUAGE]
+        specify which parser you want to use
+        eg: -l "Handlebars"
+        default: "Javascript"
     [FILES]
         REQUIRED
         files list to be parsed

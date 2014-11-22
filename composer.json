@@ -1,7 +1,7 @@
 {
     "name": "wisembly/xgettext",
     "description": "Javascript poEdit parser written in PHP",
-    "keywords": [ "poEdit", "xgettext", "xgettext", "parser", "i18n" ],
+    "keywords": [ "Poedit", "xgettext", "gettext.js", "parser", "i18n", "po2json", "handlebars" ],
     "license": "MIT",
     "authors": [
         {
@@ -13,7 +13,10 @@
             "email": "mathieu@wisembly.com"
         }
     ],
-    "bin": [ "bin/xgettext", "bin/dumper" ],
+    "bin": [
+        "bin/xgettext",
+        "bin/dumper"
+    ],
     "require": {
         "php": ">=5.3.0"
     },

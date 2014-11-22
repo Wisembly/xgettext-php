@@ -15,10 +15,23 @@ class XgettextCommandTest extends TestCase
 
         $parser = new PoeditParser($output);
         $file = $parser->parse();
+        unlink($output);
 
         $this->assertInstanceOf('\Xgettext\Poedit\PoeditFile', $file);
         $this->assertCount(15, $file->getStrings());
+    }
 
+    public function testXgettextHandlebarsCommand()
+    {
+        $output = __DIR__ . '/Resources/dump/' . $this->generateRandomFileName();
+
+        exec(__DIR__ . '/../../../bin/xgettext -l "handlebars" -o "' . $output . '" -k "_t" -k "_n:1,2" "' . __DIR__ . '/Resources/test.hbs"');
+
+        $parser = new PoeditParser($output);
+        $file = $parser->parse();
         unlink($output);
+
+        $this->assertInstanceOf('\Xgettext\Poedit\PoeditFile', $file);
+        $this->assertCount(2, $file->getStrings());
     }
 }

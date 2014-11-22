@@ -6,14 +6,14 @@ use \Exception,
     \InvalidArgumentException;
 
 use Xgettext\Poedit\PoeditFile,
-    Xgettext\Dumper\PoeditDumper,
-    Xgettext\Parser\JavascriptParser;
+    Xgettext\Dumper\PoeditDumper;
 
 class Xgettext
 {
-    public function __construct(array $files, $output, array $keywords = array('_'), $enc = 'UTF-8', $cli = false)
+    public function __construct(array $files, $output, array $keywords = array('_'), $parser = 'javascript', $enc = 'UTF-8', $cli = false)
     {
         $this->cli = $cli;
+        $parser = 'Xgettext\\Parser\\' . ucfirst(strtolower($parser)) . 'Parser';
 
         if (empty($files)) {
             throw new InvalidArgumentException('You did not provide any input file.');
@@ -26,8 +26,12 @@ class Xgettext
         $poeditFile = new PoeditFile();
 
         foreach ($files as $file) {
-            $javascriptParser = new JavascriptParser($file, $keywords);
-            $poeditFile->addStrings($javascriptParser->parse());
+            try {
+                $fileParser = new $parser($file, $keywords);
+                $poeditFile->addStrings($fileParser->parse());
+            } catch (Exception $e) {
+                throw new InvalidArgumentException(sprintf('"%s" parser does not exist', $parser));
+            }
         }
 
         $poeditDumper = new PoeditDumper($output);
