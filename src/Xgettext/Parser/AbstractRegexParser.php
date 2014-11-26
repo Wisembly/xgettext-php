@@ -5,7 +5,7 @@ namespace Xgettext\Parser;
 use Xgettext\Poedit\PoeditString,
     Xgettext\Poedit\PoeditPluralString;
 
-abstract class AbstractParser
+abstract class AbstractRegexParser
 {
     protected $file;
     protected $keywords;
@@ -14,8 +14,8 @@ abstract class AbstractParser
     public function __construct($file, array $keywords = array('_'))
     {
         $this->file = $file;
-        $this->keywords = $this->handleKeywords($keywords);
         $this->strings = array();
+        $this->keywords = $this->handleKeywords($keywords);
     }
 
     // make keword list and argument positions
@@ -37,6 +37,16 @@ abstract class AbstractParser
         return $kwds;
     }
 
+    public function extractCalls($line)
+    {
+        return array();
+    }
+
+    public function extractArguments($arguments)
+    {
+        return array();
+    }
+
     public function parse($string = null)
     {
         $line_count = 0;
@@ -47,36 +57,30 @@ abstract class AbstractParser
             $line = fgets($handle);
             $comment = $this->file . ':' . ++$line_count;
 
-            // catch everything looking like keyword(<arguments>)
-            preg_match_all($this->getFuncRegex(), $line, $callMatches); // get all that is inside function brackets (arguments)
+            $calls = $this->extractCalls($line);
 
             // nothing found in the parsed line
-            if (!isset($callMatches[1][0])) {
+            if (empty($calls)) {
                 continue;
             }
 
-            $keyword = $callMatches[1][0];
-
             // foreach every call match to analyze arguments, they must be strings
-            foreach ($callMatches[2] as $arguments) {
-                preg_match_all($this->getArgsRegex(), $arguments, $matches);
+            foreach ($calls as $call) {
+                $arguments = $this->extractArguments($call['arguments']);
 
-                // false alert, not valid arguments inside
-                if (!isset($matches[2][0])) {
+                // false positive, no matching arguments inside
+                if (empty($arguments)) {
                     continue;
                 }
 
-                // detect if string delimiter is ' or " to properly un escape
-                $delimiter = $matches[1][0];
-
                 // first argument is msgid
-                $msgid = str_replace("\\$delimiter", $delimiter, $matches[2][$this->keywords[$keyword][0] - 1]);
+                $msgid = str_replace('\\' . $arguments[0]['delimiter'], $arguments[0]['delimiter'], $arguments[0]['arguments']);
 
                 // if we did not have found already this string, create it
                 if (!in_array($msgid, array_keys($this->strings))) {
                     // we have a plural form case
-                    if (2 === count($this->keywords[$keyword])) {
-                        $msgid_plural = str_replace("\\$delimiter", $delimiter, $matches[2][$this->keywords[$keyword][1] - 1]);
+                    if (2 === count($this->keywords[$call['keyword']])) {
+                        $msgid_plural = str_replace('\\' . $arguments[1]['delimiter'], $arguments[1]['delimiter'], $arguments[$this->keywords[$call['keyword']][1] - 1]['arguments']);
                         $this->strings[$msgid] = new PoeditPluralString($msgid, $msgid_plural);
                     } else {
                         $this->strings[$msgid] = new PoeditString($msgid);

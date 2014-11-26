@@ -18,7 +18,7 @@ class XgettextCommandTest extends TestCase
         unlink($output);
 
         $this->assertInstanceOf('\Xgettext\Poedit\PoeditFile', $file);
-        $this->assertCount(15, $file->getStrings());
+        $this->assertCount(17, $file->getStrings());
     }
 
     public function testXgettextHandlebarsCommand()

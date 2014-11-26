@@ -2,15 +2,52 @@
 
 namespace Xgettext\Parser;
 
-class JavascriptParser extends AbstractParser implements ParserInterface
+class JavascriptParser extends AbstractRegexParser implements ParserInterface
 {
-    public function getFuncRegex()
+    // public function extractCalls($line)
+    // {
+    //     // catch everything looking like keyword(<arguments>)
+    //     preg_match_all('`((' . implode('|', array_keys($this->keywords)) . '))\(,?\h*((["\'])(?:\\\4|(?!\4|\n).)*\4),?\s*((?3))?`', $line, $matches);
+
+    //     $calls = array();
+
+    //     foreach ($matches[1] as $index => $keyword) {
+    //         $calls[] = array(
+    //             'keyword'   => $keyword,
+    //             'arguments' => $matches[3][$index] . (isset($matches[5][$index]) ? $matches[5][$index] : ''), // weird regex behavior if two strings arguments does not have the same delimiter
+    //         );
+    //     }
+
+    //     return $calls;
+    // }
+
+    public function extractCalls($line)
     {
-        return '`(' . implode('|', array_keys($this->keywords)) . ')\(([^)]*)\)`';
+        $calls = array();
+        preg_match_all('`((' . implode('|', array_keys($this->keywords)) . '))\(((?:[^()]*\([^()]*\))*[^()]*)\)`', $line, $matches);
+
+        foreach ($matches[1] as $index => $keyword) {
+            $calls[] = array(
+                'keyword'   => $keyword,
+                'arguments' => $matches[3][$index],
+            );
+        }
+
+        return $calls;
     }
 
-    public function getArgsRegex()
+    public function extractArguments($arguments)
     {
-        return '`(?:\s*([\'"]))(.+?)(?=(?<!\\\)\1)\1`';
+        $args = array();
+        preg_match_all('`(?:\s*([\'"]))(.+?)(?=(?<!\\\)\1)\1`', $arguments, $matches);
+
+        foreach ($matches[1] as $index => $delimiter) {
+            $args[] = array(
+                'delimiter' => $delimiter,
+                'arguments'  => $matches[2][$index],
+            );
+        }
+
+        return $args;
     }
 }

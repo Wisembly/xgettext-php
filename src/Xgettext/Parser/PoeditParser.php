@@ -8,7 +8,7 @@ use Xgettext\Poedit\PoeditString,
     Xgettext\Poedit\PoeditPluralString,
     Xgettext\Poedit\PoeditFile;
 
-class PoeditParser
+class PoeditParser implements ParserInterface
 {
     protected $file;
     protected $poEditFile;

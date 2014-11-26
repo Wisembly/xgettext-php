@@ -18,6 +18,8 @@ function test(param) {
         var s4 = _n("singular text", "{{ count}} plural", 42);
         var s4 = _n('singular text again', "another {{ count}} plural", 7);
 
+        true ? __("String with (parenthesis)") : __('and another string with %weird {characters}! |&[] in the same line');
+        _n("Time remaining: %1 day", "Time remaining: %1 days", obj.remaining)
         // "string in comment"
         //;
 

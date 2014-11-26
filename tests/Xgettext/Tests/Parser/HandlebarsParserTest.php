@@ -7,7 +7,7 @@ use Xgettext\Tests\TestCase,
 
 class HandlebarsParserTest extends TestCase
 {
-    public function testParseTestJsFile()
+    public function testParseTestHbsFile()
     {
         $parser = new HandleBarsParser(__DIR__ . '/../Resources/test.hbs', array('_t', '_n:1,2'));
         $content = $parser->parse();

@@ -2,15 +2,36 @@
 
 namespace Xgettext\Parser;
 
-class HandlebarsParser extends AbstractParser implements ParserInterface
+// http://stackoverflow.com/questions/26725207/find-every-string-between-quotes-inside-specific-curly-braces
+class HandlebarsParser extends AbstractRegexParser implements ParserInterface
 {
-    public function getFuncRegex()
+    public function extractCalls($line)
     {
-        return '`(' . implode('|', array_keys($this->keywords)) . ')(.*?["\'])\s*\}{2}`';
+        $calls = array();
+        preg_match_all('`(' . implode('|', array_keys($this->keywords)) . ')(.*?["\'])\s*\}{2}`', $line, $matches);
+
+        foreach ($matches[1] as $index => $keyword) {
+            $calls[] = array(
+                'keyword'   => $keyword,
+                'arguments' => $matches[2][$index],
+            );
+        }
+
+        return $calls;
     }
 
-    public function getArgsRegex()
+    public function extractArguments($arguments)
     {
-        return '`(["\'])(.*?)\1`';
+        $args = array();
+        preg_match_all('`(["\'])(.*?)\1`', $arguments, $matches);
+
+        foreach ($matches[1] as $index => $delimiter) {
+            $args[] = array(
+                'delimiter' => $delimiter,
+                'arguments'  => $matches[2][$index],
+            );
+        }
+
+        return $args;
     }
 }
