@@ -32,7 +32,6 @@ class PoeditPluralString extends AbstractPoeditString
         $string .= $this->dumpComments();
         $string .= $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgid "', $this->key, '"' . PHP_EOL);
         $string .= $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgid_plural "', $this->pluralForm, '"' . PHP_EOL);
-
         $string .= $this->dumpPlurals();
 
         $string .= PHP_EOL;
@@ -90,11 +89,11 @@ class PoeditPluralString extends AbstractPoeditString
 
     private function dumpPlurals()
     {
-        if (empty($this->plurals)) {
-            return $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgstr[0] ""' . PHP_EOL);
-        }
-
         $string = '';
+
+        if (empty($this->plurals)) {
+            return $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgstr[0] "', "", '"' . PHP_EOL);
+        }
 
         foreach ($this->plurals as $index => $translation) {
             $string .= $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgstr[' , $index , '] "' . $translation . '"' . PHP_EOL);

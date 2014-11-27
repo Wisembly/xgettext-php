@@ -25,8 +25,8 @@ class JavascriptParserTest extends TestCase
 
         $this->assertCount(3, $content);
         $this->assertInstanceOf('\Xgettext\Poedit\PoeditPluralString', $content['singular text']);
-        $this->assertEquals('{{ count}} plural', $content['singular text']->getPluralForm());
-        $this->assertEquals('another {{ count}} plural', $content['singular text again']->getPluralForm());
+        $this->assertEquals('{{ count }} plural', $content['singular text']->getPluralForm());
+        $this->assertEquals('another {{ count }} plural', $content['singular text again']->getPluralForm());
     }
 
     public function testParseTestJsFileWithPlurals()

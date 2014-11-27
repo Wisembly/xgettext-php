@@ -15,11 +15,15 @@ function test(param) {
         var s7 = __("string 2: \"escaped double quotes\"");
         var s8 = __('string 2: \'escaped single quotes\'');
 
-        var s4 = _n("singular text", "{{ count}} plural", 42);
-        var s4 = _n('singular text again', "another {{ count}} plural", 7);
+        var s4 = _n("singular text", "{{ count }} plural", 42);
+        var s4 = _n('singular text again', "another {{ count }} plural", 7);
+        var s4 = _n('singular text again', "another {{ count }} plural", 42);
 
         true ? __("String with (parenthesis)") : __('and another string with %weird {characters}! |&[] in the same line');
         _n("Time remaining: %1 day", "Time remaining: %1 days", obj.remaining)
+
+        _n("Wrong plural, won't be parsed!");
+
         // "string in comment"
         //;
 

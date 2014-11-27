@@ -48,7 +48,7 @@ while ($i < count($argv)) {
         $i += 2;
     } else {
         if (is_dir($argv[$i])) {
-            $input['files'] = array_merge($input['files'], Finder::findr($argv[$i], $defaults['-e']));
+            $input['files'] = array_merge($defaults['files'], Finder::findr($argv[$i], $defaults['-e']));
         } else {
             $input['files'][] = $argv[$i];
         }

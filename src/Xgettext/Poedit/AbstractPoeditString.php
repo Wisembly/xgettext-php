@@ -95,12 +95,8 @@ abstract class AbstractPoeditString
         return $this;
     }
 
-    public function isEqualTo(PoeditString $string) {
+    public function isEqualTo(AbstractPoeditString $string) {
         if ($string->getKey() !== $this->getKey()) {
-            return false;
-        }
-
-        if ($string->getValue() !== $this->getValue()) {
             return false;
         }
 

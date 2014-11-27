@@ -70,16 +70,17 @@ class PoeditFileTest extends TestCase
         $file->addString(new String('foo', 'bar', array('comment1'), array('extracted1'), array('ref1'), array('flag1'), true));
         $file->addString(new String('foo', 'baz', array('comment2'), array('extracted2'), array('ref2'), array('flag2')));
 
-        $this->assertEquals('baz', $file->getString('foo')->getValue());
-        $this->assertEquals(array('comment2'), $file->getString('foo')->getComments());
-        $this->assertEquals(array('extracted2'), $file->getString('foo')->getExtracteds());
-        $this->assertEquals(array('ref2'), $file->getString('foo')->getReferences());
-        $this->assertEquals(array('flag2'), $file->getString('foo')->getFlags());
+        $this->assertEquals('bar', $file->getString('foo')->getValue());
+        $this->assertEquals(array('comment1', 'comment2'), $file->getString('foo')->getComments());
+        $this->assertEquals(array('extracted1', 'extracted2'), $file->getString('foo')->getExtracteds());
+        $this->assertEquals(array('ref1', 'ref2'), $file->getString('foo')->getReferences());
+        $this->assertEquals(array('flag1','flag2'), $file->getString('foo')->getFlags());
 
         $file->addString(new String('foo', 'baz', array('comment3'), array('extracted3'), array('ref3'), array('flag3')));
-        $this->assertEquals(array('comment2', 'comment3'), $file->getString('foo')->getComments());
-        $this->assertEquals(array('extracted2', 'extracted3'), $file->getString('foo')->getExtracteds());
-        $this->assertEquals(array('ref2', 'ref3'), $file->getString('foo')->getReferences());
-        $this->assertEquals(array('flag2', 'flag3'), $file->getString('foo')->getFlags());
+        $this->assertEquals('bar', $file->getString('foo')->getValue());
+        $this->assertEquals(array('comment1', 'comment2', 'comment3'), $file->getString('foo')->getComments());
+        $this->assertEquals(array('extracted1', 'extracted2', 'extracted3'), $file->getString('foo')->getExtracteds());
+        $this->assertEquals(array('ref1', 'ref2', 'ref3'), $file->getString('foo')->getReferences());
+        $this->assertEquals(array('flag1', 'flag2', 'flag3'), $file->getString('foo')->getFlags());
     }
 }

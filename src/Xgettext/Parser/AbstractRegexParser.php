@@ -80,6 +80,11 @@ abstract class AbstractRegexParser
                 if (!in_array($msgid, array_keys($this->strings))) {
                     // we have a plural form case
                     if (2 === count($this->keywords[$call['keyword']])) {
+                        // we asked for a plural keyword above, but only one argument were found. Abort silently
+                        if (!isset($arguments[1])) {
+                            continue;
+                        }
+
                         $msgid_plural = str_replace('\\' . $arguments[1]['delimiter'], $arguments[1]['delimiter'], $arguments[$this->keywords[$call['keyword']][1] - 1]['arguments']);
                         $this->strings[$msgid] = new PoeditPluralString($msgid, $msgid_plural);
                     } else {

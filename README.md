@@ -33,6 +33,9 @@ Then, set up xgettext like this:
 
 ![configure xgettext parser](https://raw.githubusercontent.com/Wisembly/xgettext-php/master/doc/js.png)
 
+**WARNING:** Javascript parser currently parse only 1rst and 2nd arguments. It
+also do not parse strings with non matching parenthesis. (avoid smileys..)
+
 ### Handlebars parser
 
 Same like above, just add `-l "handlebars"` in yout `xgettext` call to stipulate you want
