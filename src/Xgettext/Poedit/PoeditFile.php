@@ -9,10 +9,12 @@ class PoeditFile
     private $headers;
     private $strings;
 
+    public $headersArray;
+
     public function __construct($headers = null, array $strings = array())
     {
         $this->strings = array();
-        $this->headers = null === $headers ? 'msgid ""' . PHP_EOL . 'msgstr ""' : $headers;
+        $this->setHeaders(null === $headers ? 'msgid ""' . PHP_EOL . 'msgstr ""' : $headers);
 
         foreach ($strings as $string) {
             if (!($string instanceof AbstractPoeditString)) {
@@ -75,9 +77,38 @@ class PoeditFile
         return $deprecated;
     }
 
+    public function decodeHeaders($headers)
+    {
+        preg_match_all('/"(.*?):(.*?)"/mi', str_replace('\n', '', $headers), $matches);
+
+        foreach ($matches[1] as $index => $header) {
+            $this->setHeader(trim($header), trim($matches[2][$index]));
+        }
+
+        return $this;
+    }
+
+    // public function encodeHeaders(array $headers)
+    // {
+    //     return $this;
+    // }
+
+    public function setHeader($header, $value)
+    {
+        $this->headersArray[$header] = $value;
+
+        return $this;
+    }
+
+    public function getHeader($header, $placeholder = null)
+    {
+        return isset($this->headersArray[$header]) ? $this->headersArray[$header] : $placeholder;
+    }
+
     public function setHeaders($headers)
     {
         $this->headers = $headers;
+        $this->decodeHeaders($headers);
 
         return $this;
     }
@@ -89,6 +120,7 @@ class PoeditFile
 
     public function addHeader($header)
     {
+        $this->decodeHeaders($header);
         $this->headers .= $header . PHP_EOL;
 
         return $this;
@@ -96,11 +128,12 @@ class PoeditFile
 
     public function getLang()
     {
-        if (1 !== preg_match('/Language: ([a-z]{2,3})/i', $this->headers, $match)) {
-            return null;
-        }
+        return $this->getHeader('Language');
+    }
 
-        return $match[1];
+    public function getPluralForms()
+    {
+        return $this->getHeader('Plural-Forms');
     }
 
     public function getStrings()
