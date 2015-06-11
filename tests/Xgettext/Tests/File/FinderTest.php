@@ -7,7 +7,7 @@ use \org\bovigo\vfs\vfsStream;
 use Xgettext\Tests\TestCase,
     Xgettext\File\Finder;
 
-class FileTest extends TestCase
+class FinderTest extends TestCase
 {
     public function setUp()
     {
