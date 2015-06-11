@@ -84,7 +84,7 @@ Usage xgettext -o [OUTPUT] -k [KEYWORDS] -c [ENCODING] [FILES]
         default: "Javascript"
     [FILES]
         REQUIRED
-        files list to be parsed
+        files list to be parsed. Could be directory
         eg: "../file.js" "../anotherfile.html" "../still/anotherfile.js"
 
 
