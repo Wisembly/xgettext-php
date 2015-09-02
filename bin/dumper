@@ -20,8 +20,6 @@ set_time_limit(0);
 
 require_once JSGETTEXT_COMPOSER_INSTALL;
 
-use \Exception;
-
 use Xgettext\Dumper\JsonDumper,
     Xgettext\Parser\PoeditParser;
 
