@@ -32,6 +32,6 @@ class XgettextCommandTest extends TestCase
         unlink($output);
 
         $this->assertInstanceOf('\Xgettext\Poedit\PoeditFile', $file);
-        $this->assertCount(2, $file->getStrings());
+        $this->assertCount(3, $file->getStrings());
     }
 }

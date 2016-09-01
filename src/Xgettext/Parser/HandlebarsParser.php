@@ -8,7 +8,7 @@ class HandlebarsParser extends AbstractRegexParser implements ParserInterface
     public function extractCalls($line)
     {
         $calls = array();
-        preg_match_all('`(' . implode('|', array_keys($this->keywords)) . ')(.*?["\'])\s*\}{2}`', $line, $matches);
+        preg_match_all('`(' . implode('|', array_keys($this->keywords)) . ')(.*?["\'].*)\s*\}{2}`', $line, $matches);
 
         foreach ($matches[1] as $index => $keyword) {
             $calls[] = array(
