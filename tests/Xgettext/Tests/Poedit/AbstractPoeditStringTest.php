@@ -3,13 +3,13 @@
 namespace Xgettext\Tests\Poedit;
 
 use Xgettext\Tests\TestCase,
-    Xgettext\Poedit\PoeditString as String;
+    Xgettext\Poedit\PoeditString;
 
 class AbstractPoeditStringTest extends TestCase
 {
     public function testStringWithFuzzy()
     {
-        $string = new String('Reference text', 'Translated value in whatever languague you want');
+        $string = new PoeditString('Reference text', 'Translated value in whatever languague you want');
         $string->setFuzzy(true);
         $this->assertTrue($string->isFuzzy());
         $this->assertEquals($string->__toString(),<<<EOT
@@ -24,7 +24,7 @@ EOT
 
     public function testStringWithComments()
     {
-        $string = new String('Reference text', 'Translated value in whatever languague you want', array(), array(), array('../../first/file.js:85', '../../second/file.html:42'));
+        $string = new PoeditString('Reference text', 'Translated value in whatever languague you want', array(), array(), array('../../first/file.js:85', '../../second/file.html:42'));
         $this->assertEquals($string->__toString(),<<<EOT
 #: ../../first/file.js:85
 #: ../../second/file.html:42
@@ -38,7 +38,7 @@ EOT
 
     public function testStringWithCommentsAndFuzzy()
     {
-        $string = new String('Reference text', 'Translated value in whatever languague you want', array(), array(), array('../../first/file.js:85', '../../second/file.html:42'), array('fuzzy'));
+        $string = new PoeditString('Reference text', 'Translated value in whatever languague you want', array(), array(), array('../../first/file.js:85', '../../second/file.html:42'), array('fuzzy'));
         $this->assertEquals($string->__toString(),<<<EOT
 #: ../../first/file.js:85
 #: ../../second/file.html:42
@@ -53,7 +53,7 @@ EOT
 
     public function testComments()
     {
-        $string = new String('Reference text', 'Translated value in whatever languague you want', array('foo'));
+        $string = new PoeditString('Reference text', 'Translated value in whatever languague you want', array('foo'));
         $this->assertEquals($string->getComments(), array('foo'));
 
         $string->addComment('bar');
@@ -79,7 +79,7 @@ EOT
         $string->setFuzzy(true);
         $this->assertTrue($string->isFuzzy());
 
-        $string = new String('foo', 'bar', array('foo'), array('bar'), array('baz'), array('qux'));
+        $string = new PoeditString('foo', 'bar', array('foo'), array('bar'), array('baz'), array('qux'));
         $string->addComment('bar');
         $string->addExtracted('baz');
         $string->addReference('qux');

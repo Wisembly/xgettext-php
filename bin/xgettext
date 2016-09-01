@@ -20,8 +20,6 @@ set_time_limit(0);
 
 require_once JSGETTEXT_COMPOSER_INSTALL;
 
-use \Exception;
-
 use Xgettext\Xgettext,
     Xgettext\File\Finder;
 
@@ -60,7 +58,7 @@ $input = array_merge($defaults, $input);
 
 try {
     new Xgettext($input['files'], $input['-o'], $input['-k'], $input['-l'], $input['-c'], true);
-} catch (Exception $e) {
+} catch (\Exception $e) {
     fwrite(STDOUT, $e->getMessage() . <<<EOT
 
 
