@@ -12,10 +12,12 @@ class JavascriptParserTest extends TestCase
         $parser = new JavascriptParser(__DIR__ . '/../Resources/test.js', array('__'));
         $content = $parser->parse();
 
-        $this->assertCount(11, $content);
+        $this->assertCount(12, $content);
         $this->assertInstanceOf('\Xgettext\Poedit\PoeditString', $content['Hello world, testing xgettext']);
         $references = $content['Test string']->getReferences();
         $this->assertEquals('test.js:6', substr($references[0], -9));
+
+        $this->assertInstanceOf('\Xgettext\Poedit\PoeditString', $content["A <span class='someclass'>{{complex}}</span> string with <span class='anotherclass'>{{variables}}</span>."]);
     }
 
     public function testParseTestJsFileOnlyPlurals()
@@ -34,7 +36,7 @@ class JavascriptParserTest extends TestCase
         $parser = new JavascriptParser(__DIR__ . '/../Resources/test.js', array('__', '_n:1,2'));
         $content = $parser->parse();
 
-        $this->assertCount(14, $content);
+        $this->assertCount(15, $content);
     }
 
     public function testParseTestHtmlFile()

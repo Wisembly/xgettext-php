@@ -33,4 +33,9 @@ function test(param) {
          * comment
          * __("Hello world from comment")
          */
+
+        __("A <span class='someclass'>{{complex}}</span> string with <span class='anotherclass'>{{variables}}</span>.", {
+            complex: _.escape(call("something")),
+            variables: other_thing
+        })
 }

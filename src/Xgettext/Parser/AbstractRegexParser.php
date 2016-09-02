@@ -59,6 +59,8 @@ abstract class AbstractRegexParser
 
             $calls = $this->extractCalls($line);
 
+            // var_dump($calls);
+
             // nothing found in the parsed line
             if (empty($calls)) {
                 continue;
