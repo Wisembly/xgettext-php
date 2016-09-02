@@ -18,7 +18,7 @@ class XgettextTest extends TestCase
         $parser = new PoeditParser($output);
         $file = $parser->parse();
 
-        $this->assertCount(17, $file->getStrings());
+        $this->assertCount(18, $file->getStrings());
         unlink($output);
     }
 
