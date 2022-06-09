@@ -26,6 +26,23 @@ class PoeditPluralString extends AbstractPoeditString
         );
     }
 
+    public function dump($noComments = false)
+    {
+        $string = '';
+
+        if (!$noComments) {
+            $string .= $this->dumpComments();
+        }
+
+        $string .= $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgid "', $this->key, '"' . PHP_EOL);
+        $string .= $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgid_plural "', $this->pluralForm, '"' . PHP_EOL);
+        $string .= $this->dumpPlurals();
+
+        $string .= PHP_EOL;
+
+        return $string;
+    }
+
     public function __toString()
     {
         $string = '';

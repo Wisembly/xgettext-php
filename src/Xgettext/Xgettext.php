@@ -10,7 +10,15 @@ use Xgettext\Poedit\PoeditFile,
 
 class Xgettext
 {
-    public function __construct(array $files, $output, array $keywords = array('_'), $parser = 'javascript', $enc = 'UTF-8', $cli = false)
+    public function __construct(
+        array $files,
+        $output,
+        array $keywords = array('_'),
+        $parser = 'javascript',
+        $enc = 'UTF-8',
+        $cli = false,
+        $noComments = false
+    )
     {
         $this->cli = $cli;
         $parser = 'Xgettext\\Parser\\' . ucfirst(strtolower($parser)) . 'Parser';
@@ -35,6 +43,6 @@ class Xgettext
         }
 
         $poeditDumper = new PoeditDumper($output);
-        $poeditDumper->dump($poeditFile, null, false, $enc);
+        $poeditDumper->dump($poeditFile, null, false, $enc, $noComments);
     }
 }

@@ -24,6 +24,21 @@ class PoeditString extends AbstractPoeditString
         );
     }
 
+    public function dump($noComments = false)
+    {
+        $string = '';
+
+        if (!$noComments) {
+            $string .= $this->dumpComments();
+        }
+
+        $string .= $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgid "', $this->key, '"' . PHP_EOL);
+        $string .= $this->dumpString(($this->isDeprecated() ? '#~ ' : '') . 'msgstr "', $this->value, '"' . PHP_EOL);
+        $string .= PHP_EOL;
+
+        return $string;
+    }
+
     public function __toString()
     {
         $string = '';
