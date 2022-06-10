@@ -31,7 +31,7 @@ class PoeditDumper implements DumperInterface
     *
     *   @return boolean
     */
-    public function dump(PoeditFile $file, $filename = null, $sort = false, $charset = 'UTF-8')
+    public function dump(PoeditFile $file, $filename = null, $sort = false, $charset = 'UTF-8', $noComments = false)
     {
         $filename = null !== $filename ? $filename : $this->file;
         $content = $file->getHeaders() . PHP_EOL;
@@ -40,7 +40,7 @@ class PoeditDumper implements DumperInterface
         $strings = true === $sort ? $file->sortStrings()->getStrings() : $file->getStrings();
 
         foreach ($strings as $string) {
-            $content .= true === $sort ? $string->sortReferences()->sortComments()->sortExtracteds()->sortFlags() : $string;
+            $content .= true === $sort ? $string->sortReferences()->sortComments()->sortExtracteds()->sortFlags()->dump($noComments) : $string->dump($noComments);
         }
 
         // ensure that path and file exists

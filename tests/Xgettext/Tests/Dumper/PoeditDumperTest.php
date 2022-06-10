@@ -87,4 +87,27 @@ class PoeditDumperTest extends TestCase
         $this->assertTrue($file->hasString('foo'));
         $this->assertEquals($file->getString('foo')->getPlurals(), array('plural one', 'plural two', 'last plural'));
     }
+
+    public function testDupWithoutComments()
+    {
+        $this->file = new PoeditFile();
+        $this->file->addHeader('"Language: fr\n"');
+        $this->file->addString(new PoeditString('foo', 'bar', array('baz', 'foo:56', 'foo:35','bar')));
+        $this->file->addString(new PoeditPluralString('One foo', '{{ count }} foos', array('Un foo', '{{ count }} fifoos'), array('baz', 'foo:56', 'foo:35', 'bar')));
+
+        $filename = $this->generateRandomFileName('json');
+        $basePath = __DIR__ . '/../Resources/dump';
+        $output = $basePath . '/' . $filename;
+
+        $dumper = new PoeditDumper($output);
+        $dumper->dump($this->file, null, false, 'UTF-8', true);
+
+        $parser = new PoeditParser($output);
+        $content = file_get_contents($output);
+        unlink($output);
+
+        $expect = file_get_contents(__DIR__ . '/../Resources/testDump.po');
+
+        $this->assertEquals($content, $expect);
+    }
 }

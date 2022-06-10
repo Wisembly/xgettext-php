@@ -1,0 +1,13 @@
+msgid ""
+msgstr """Language: fr\n"
+
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "foo"
+msgstr "bar"
+
+msgid "One foo"
+msgid_plural "{{ count }} foos"
+msgstr[0] "Un foo"
+msgstr[1] "{{ count }} fifoos"
+
